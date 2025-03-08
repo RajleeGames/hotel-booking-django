@@ -1,0 +1,213 @@
+{% extends "booking/base.html" %}
+{% load static %}
+
+{% block title %}Wellness Centre - Kilimanjaro Magic Site Hotel{% endblock %}
+
+{% block hero_image %}{% static 'images/wellness_center.jpg' %}{% endblock %}
+
+{% block hero_content %}
+<h1>Wellness Centre</h1>
+<p>
+  Indulge in relaxation and rejuvenation at our modern spa, fully equipped gym, and more.
+</p>
+{% endblock %}
+
+{% block content %}
+<!-- Section Heading -->
+<div class="section-heading">
+  <h2>OUR FACILITIES</h2>
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+<!-- FITNESS CENTRE -->
+<section class="room-section">
+  <div class="room-text">
+    <h3>FITNESS CENTRE</h3>
+    <p>
+      Both business and leisure travelers will find a welcoming sanctuary away from daily pressures at our Health and Fitness Club. The luxurious enclave offers harmonious journeys of purification and rejuvenation for both body and soul.
+    </p>
+    <p>
+      On the second floor, Kibo’s Health and Fitness Club is in an environment that inspires our guests and members to perform, featuring top-of-the-range amenities that keep them energized under the supervision of our professional instructors.
+    </p>
+  </div>
+
+  <!-- Slider with 3 images -->
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <img src="{% static 'images/1c.jpg' %}" alt="Fitness Centre - View 1">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1b.jpg' %}" alt="Fitness Centre - View 2">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1a.jpg' %}" alt="Fitness Centre - View 3">
+      </div>
+    </div>
+    <button class="prev-arrow">←</button>
+    <button class="next-arrow">→</button>
+  </div>
+</section>
+
+<div class="diamond-line-container">
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+<!-- MASSAGE CENTRE -->
+<section class="room-section">
+  <div class="room-text">
+    <h3>MASSAGE CENTRE</h3>
+    <p>
+      Take indulgence to a new level by treating your body with our massage treatments designed for rest and rejuvenation. Counter the negative effects of travel-induced stress with a stimulating massage to lull you deeper into relaxation—guaranteed to instill a sense of peace and wellbeing that is simply impossible to resist.
+    </p>
+  </div>
+
+  <!-- Slider with 3 images -->
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <img src="{% static 'images/1e.jpg' %}" alt="Massage Centre - View 1">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/2a.jpg' %}" alt="Massage Centre - View 2">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1d.jpg' %}" alt="Massage Centre - View 3">
+      </div>
+    </div>
+    <button class="prev-arrow">←</button>
+    <button class="next-arrow">→</button>
+  </div>
+</section>
+
+<div class="diamond-line-container">
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+<!-- SAUNA OR STEAM ROOM -->
+<section class="room-section">
+  <div class="room-text">
+    <h3>SAUNA OR STEAM ROOM</h3>
+    <p>
+      Your visit is not complete without a session—or several—in our sauna or steam room. Detox, relax, and loosen your muscles using the ancient method of cleansing and healing the body, mind, and spirit.
+    </p>
+  </div>
+
+  <!-- Slider with 3 images -->
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <img src="{% static 'images/1c.jpg' %}" alt="Sauna - View 1">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1b.jpg' %}" alt="Sauna - View 2">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1a.jpg' %}" alt="Sauna - View 3">
+      </div>
+    </div>
+    <button class="prev-arrow">←</button>
+    <button class="next-arrow">→</button>
+  </div>
+</section>
+
+<div class="diamond-line-container">
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+<!-- SWIMMING POOL -->
+<section class="room-section">
+  <div class="room-text">
+    <h3>SWIMMING POOL</h3>
+    <p>
+      With access to the Tropical Bar, our pool—one of the best in Arusha—offers healthy juices, cocktails, and light revitalizing snacks, providing a welcome relief from the city’s buzz. As the night sets in, the pool morphs into an ambiance of chic relaxation. The pool is open to the general public, offering a decadent lounging experience.
+    </p>
+  </div>
+
+  <!-- Slider with 3 images -->
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <img src="{% static 'images/1c.jpg' %}" alt="Swimming Pool - View 1">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1b.jpg' %}" alt="Swimming Pool - View 2">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1a.jpg' %}" alt="Swimming Pool - View 3">
+      </div>
+    </div>
+    <button class="prev-arrow">←</button>
+    <button class="next-arrow">→</button>
+  </div>
+</section>
+
+<div class="diamond-line-container">
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // 1) Optional IntersectionObserver for fade-in
+    const sections = document.querySelectorAll('.room-section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in-up');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+
+    // 2) Simple slider logic for each .slider-container
+    const sliderContainers = document.querySelectorAll('.slider-container');
+    sliderContainers.forEach(container => {
+      const slider = container.querySelector('.slider');
+      const slides = container.querySelectorAll('.slide');
+      const prevBtn = container.querySelector('.prev-arrow');
+      const nextBtn = container.querySelector('.next-arrow');
+
+      let currentIndex = 0;
+      const totalSlides = slides.length;
+
+      // Move slides to show the current index
+      function updateSlidePosition() {
+        slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+      }
+
+      // Click: Previous
+      prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex === 0) ? totalSlides - 1 : currentIndex - 1;
+        updateSlidePosition();
+      });
+
+      // Click: Next
+      nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateSlidePosition();
+      });
+
+      // 3) Automatic sliding every 4 seconds
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateSlidePosition();
+      }, 4000);
+    });
+  });
+</script>
+{% endblock %}

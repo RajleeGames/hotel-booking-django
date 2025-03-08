@@ -1,0 +1,266 @@
+{% extends "booking/base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block title %}Events & Conferences - Kilimanjaro Magic Site Hotel{% endblock %}
+
+{% block hero_image %}{% static 'images/meeting_room.jpg' %}{% endblock %}
+
+{% block hero_content %}
+<h1>Meetings & Events</h1>
+<p>
+  We offer state-of-the-art conference facilities, meeting rooms, and event spaces...
+</p>
+{% endblock %}
+
+{% block content %}
+<!-- Section Heading -->
+<div class="section-heading">
+  <h2>OUR CONFERENCE ROOMS</h2>
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+<!-- Conference Rooms Section -->
+<section class="event-section">
+  <!-- Left side: Video container (similar to .event-image) -->
+  <div class="event-image">
+    <video controls style="width: 100%; height: 500px; border-radius: 8px;">
+      <source src="{% static 'videos/conference.mp4' %}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- Right side: Text content -->
+  <div class="event-text">
+    <h3>Our Conference Rooms</h3>
+    <p>
+      Our three conference rooms are ideal for your conference, cocktail party, product launch and any kind of celebration of up to 150 guests. The conference rooms are well ventilated and lit with both natural and artificial lighting. All rooms are also equipped with state-of-the-art audio-visual equipment.
+    </p>
+    <ul class="amenities">
+      <li>State of the art audio visual equipment</li>
+      <li>High speed Wi-Fi connectivity</li>
+      <li>Video &amp; web conferencing services</li>
+      <li>Flip charts and markers/pin boards, white boards</li>
+      <li>Catering services</li>
+      <li>Movable and modular – modern event furniture</li>
+      <li>Secretarial services, copying, printing &amp; binding</li>
+      <li>24-hour back-up generator</li>
+      <li>Spacious secure parking</li>
+      <li>Business centers</li>
+    </ul>
+    <a href="{% url 'contact' %}" class="book-now-button">Request Pricing</a>
+  </div>
+</section>
+
+
+<div class="diamond-line-container">
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+<!-- Corporate Events Section -->
+<section class="event-section">
+  <div class="event-text">
+    <h3>Corporate Events</h3>
+    <p>
+      The Kibo Palace Hotel is ideal for executive meetings, conference meetings, receptions, and dinners. Our staff will assist with every aspect of your meeting or event – ensuring maximum productivity, relaxed delegates, and effective presentations.
+    </p>
+    <p>
+      Equipped with state-of-the-art audio-visual capabilities, abundant natural light, and high-speed internet connection, our conference rooms offer a variety of sizes and configurations tailored to meet your needs.
+    </p>
+  </div>
+
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <img src="{% static 'images/1a.jpg' %}" alt="Corporate Event - View 1">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1b.jpg' %}" alt="Corporate Event - View 2">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1c.jpg' %}" alt="Corporate Event - View 3">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1d.jpg' %}" alt="Corporate Event - View 4">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1e.jpg' %}" alt="Corporate Event - View 5">
+      </div>
+    </div>
+    <button class="prev-arrow">←</button>
+    <button class="next-arrow">→</button>
+  </div>
+</section>
+
+<div class="diamond-line-container">
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+<!-- Outdoor & Special Events Section -->
+<section class="event-section">
+  <div class="event-text">
+    <h3>Outdoor &amp; Special Events</h3>
+    <p>
+      Nestled within an oasis of lush gardens, our outdoor area can accommodate up to 400 people – an ideal location for weddings, receptions, and parties. Customized event planning, exceptional catering options and a full complement of professional presentation tools will ensure that every gathering is a success.
+    </p>
+  </div>
+
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <img src="{% static 'images/2a.jpg' %}" alt="Outdoor Event - View 1">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1e.jpg' %}" alt="Outdoor Event - View 2">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1c.jpg' %}" alt="Outdoor Event - View 3">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1d.jpg' %}" alt="Outdoor Event - View 4">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1e.jpg' %}" alt="Outdoor Event - View 5">
+      </div>
+    </div>
+    <button class="prev-arrow">←</button>
+    <button class="next-arrow">→</button>
+  </div>
+</section>
+
+<div class="diamond-line-container">
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+<!-- External Catering Section -->
+<section class="event-section">
+  <div class="event-text">
+    <h3>External Catering</h3>
+    <p>
+      The renowned Kibo Palace Hotel brings refined service and culinary creativity to you. We offer an outside catering service that delivers elegance, professional service, and outstanding culinary creations to any location.
+    </p>
+  </div>
+
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <img src="{% static 'images/1c.jpg' %}" alt="Catering - View 1">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1a.jpg' %}" alt="Catering - View 2">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1e.jpg' %}" alt="Catering - View 3">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1d.jpg' %}" alt="Catering - View 4">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/2a.jpg' %}" alt="Catering - View 5">
+      </div>
+    </div>
+    <button class="prev-arrow">←</button>
+    <button class="next-arrow">→</button>
+  </div>
+</section>
+
+<div class="diamond-line-container">
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+<!-- Weddings Section -->
+<section class="event-section">
+  <div class="event-text">
+    <h3>Weddings</h3>
+    <p>
+      With some of the most romantic rooms, Kibo Palace Hotel Arusha is the perfect venue for your wedding. Enjoy expert event planning, exceptional catering, and an unforgettable celebration in a setting designed for romance.
+    </p>
+  </div>
+
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <img src="{% static 'images/pool.jpg' %}" alt="Wedding - View 1">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1c.jpg' %}" alt="Wedding - View 2">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1d.jpg' %}" alt="Wedding - View 3">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1e.jpg' %}" alt="Wedding - View 4">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1a.jpg' %}" alt="Wedding - View 5">
+      </div>
+    </div>
+    <button class="prev-arrow">←</button>
+    <button class="next-arrow">→</button>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // IntersectionObserver for fade-in effects
+    const sections = document.querySelectorAll('.event-section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in-up');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+
+    // Slider logic for each slider container
+    const sliderContainers = document.querySelectorAll('.slider-container');
+    sliderContainers.forEach(container => {
+      const slider = container.querySelector('.slider');
+      const slides = container.querySelectorAll('.slide');
+      const prevBtn = container.querySelector('.prev-arrow');
+      const nextBtn = container.querySelector('.next-arrow');
+
+      let currentIndex = 0;
+      const totalSlides = slides.length;
+
+      function updateSlidePosition() {
+        slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+      }
+
+      prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex === 0) ? totalSlides - 1 : currentIndex - 1;
+        updateSlidePosition();
+      });
+
+      nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateSlidePosition();
+      });
+
+      // Automatic sliding every 4 seconds
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateSlidePosition();
+      }, 4000);
+    });
+  });
+</script>
+{% endblock %}

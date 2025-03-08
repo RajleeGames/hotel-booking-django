@@ -1,0 +1,462 @@
+{% extends "booking/base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block title %}Accommodation - Kilimanjaro Magic Site Hotel{% endblock %}
+
+{% block hero_image %}{% static 'images/accommodation2.jpg' %}{% endblock %}
+
+{% block hero_content %}
+<h1>Accommodation</h1>
+<p>
+  Discover our wide range of rooms and suites. Each is designed to provide the utmost comfort and style.
+</p>
+{% endblock %}
+
+{% block content %}
+<!-- Section Heading -->
+<div class="section-heading">
+  <h2>ROOM TYPES</h2>
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+<!-- Executive Room -->
+<section class="room-section">
+  <div class="room-text">
+    <h3>Executive Room</h3>
+    <p><strong>Maximum Occupancy:</strong> 2 ADULTS</p>
+    <p><strong>ROOMS:</strong> 27</p>
+    <p>
+      Upgrade your stay with a booking at this modern suite with African flair, 
+      overlooking the sheltered slopes of the Kilimanjaro. Located in the main hotel building, 
+      this tranquil accommodation exemplifies refined decor.
+    </p>
+    <ul class="amenities">
+      <li>Air conditioning</li>
+      <li>LCD TV</li>
+      <li>Mini bar on request</li>
+      <li>Safe box</li>
+      <li>Coffee machine</li>
+      <li>Hair dryer</li>
+      <li>Hydromassage bath</li>
+      <li>Private Bathroom &amp; WC</li>
+    </ul>
+    <a href="{% url 'home' %}#rooms" class="book-now-button">BOOK NOW</a>
+  </div>
+
+  <!-- Slider with 5 images -->
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <img src="{% static 'images/1a.jpg' %}" alt="Executive Room - View 1">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1b.jpg' %}" alt="Executive Room - View 2">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1c.jpg' %}" alt="Executive Room - View 3">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1d.jpg' %}" alt="Executive Room - View 4">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1e.jpg' %}" alt="Executive Room - View 5">
+      </div>
+    </div>
+    <button class="prev-arrow">←</button>
+    <button class="next-arrow">→</button>
+  </div>
+</section> 
+
+<div class="diamond-line-container">
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+<!-- Executive Twin -->
+<section class="room-section">
+  <div class="room-text">
+    <h3>Executive Twin</h3>
+    <p><strong>Maximum Occupancy:</strong> 2 ADULTS</p>
+    <p><strong>ROOMS:</strong> 27</p>
+    <p>
+      Designed to fulfill the needs of a business traveler, this spacious room 
+      features modern design, elegant furnishings, and high-class equipment for 
+      a superb comfort.
+    </p>
+    <ul class="amenities">
+      <li>Air conditioning</li>
+      <li>LCD TV</li>
+      <li>Mini bar on request</li>
+      <li>Private Bathroom &amp; WC</li>
+      <li>Safe box</li>
+      <li>Tea and Coffee making facilities</li>
+      <li>Hair dryer</li>
+      <li>Hydromassage bath</li>
+      <li>Alarm clock</li>
+    </ul>
+    <a href="{% url 'home' %}#rooms" class="book-now-button">BOOK NOW</a>
+  </div>
+
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <img src="{% static 'images/2a.jpg' %}" alt="Executive Twin - View 1">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1b.jpg' %}" alt="Executive Twin - View 2">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1c.jpg' %}" alt="Executive Twin - View 3">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1d.jpg' %}" alt="Executive Twin - View 4">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1e.jpg' %}" alt="Executive Twin - View 5">
+      </div>
+    </div>
+    <button class="prev-arrow">←</button>
+    <button class="next-arrow">→</button>
+  </div>
+</section>
+
+<div class="diamond-line-container">
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+<!-- Executive Triple -->
+<section class="room-section">
+  <div class="room-text">
+    <h3>Executive Triple</h3>
+    <p><strong>Maximum Occupancy:</strong> 3 ADULTS</p>
+    <p><strong>ROOMS:</strong> 3</p>
+    <p>
+      The Executive Triple Room comes with three small beds (3×6 feet) and 
+      approximately 33 square meters of space—ideal for a family or three friends 
+      traveling together.
+    </p>
+    <ul class="amenities">
+      <li>Air conditioning</li>
+      <li>Satellite TV</li>
+      <li>Mini bar on request</li>
+      <li>Desk</li>
+      <li>Private Bathroom &amp; WC</li>
+      <li>Tea and Coffee making facilities</li>
+      <li>Hair dryer</li>
+      <li>Hydromassage bath</li>
+      <li>Safe box</li>
+    </ul>
+    <a href="{% url 'home' %}#rooms" class="book-now-button">BOOK NOW</a>
+  </div>
+
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <img src="{% static 'images/3a.jpg' %}" alt="Executive Triple - View 1">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1b.jpg' %}" alt="Executive Triple - View 2">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1c.jpg' %}" alt="Executive Triple - View 3">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1d.jpg' %}" alt="Executive Triple - View 4">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1e.jpg' %}" alt="Executive Triple - View 5">
+      </div>
+    </div>
+    <button class="prev-arrow">←</button>
+    <button class="next-arrow">→</button>
+  </div>
+</section>
+
+<div class="diamond-line-container">
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+<!-- Executive Suite -->
+<section class="room-section">
+  <div class="room-text">
+    <h3>Executive Suite</h3>
+    <p><strong>Maximum Occupancy:</strong> 3 ADULTS</p>
+    <p><strong>ROOMS:</strong> 3</p>
+    <p>
+      Upgrade your stay with a booking at this modern suite with African flair, 
+      overlooking the sheltered slopes of Kilimanjaro. Located in the main hotel building, 
+      this tranquil accommodation exemplifies refined decor.
+    </p>
+    <ul class="amenities">
+      <li>Air conditioning</li>
+      <li>LCD TV</li>
+      <li>Mini bar on request</li>
+      <li>Private Bathroom &amp; WC</li>
+      <li>Safe box</li>
+      <li>Tea and Coffee making facilities</li>
+      <li>Hair dryer</li>
+      <li>Hydromassage bath</li>
+    </ul>
+    <a href="{% url 'home' %}#rooms" class="book-now-button">BOOK NOW</a>
+  </div>
+
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <img src="{% static 'images/1a.jpg' %}" alt="Executive Suite - View 1">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1b.jpg' %}" alt="Executive Suite - View 2">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1c.jpg' %}" alt="Executive Suite - View 3">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1d.jpg' %}" alt="Executive Suite - View 4">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1e.jpg' %}" alt="Executive Suite - View 5">
+      </div>
+    </div>
+    <button class="prev-arrow">←</button>
+    <button class="next-arrow">→</button>
+  </div>
+</section>
+
+<div class="diamond-line-container">
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+<!-- Deluxe Suite -->
+<section class="room-section">
+  <div class="room-text">
+    <h3>Deluxe Suite</h3>
+    <p><strong>Maximum Occupancy:</strong> 3 ADULTS</p>
+    <p><strong>ROOMS:</strong> 3</p>
+    <p>
+      Perched on the top levels of the hotel, this suite offers homely comfort 
+      with a lavish bathroom adorned with contemporary materials in a traditional setting.
+    </p>
+    <ul class="amenities">
+      <li>Air conditioning</li>
+      <li>Satellite TV</li>
+      <li>Mini bar on request</li>
+      <li>Desk</li>
+      <li>Private Bathroom &amp; WC</li>
+      <li>Tea and Coffee making facilities</li>
+      <li>Hair dryer</li>
+      <li>Hydromassage bath</li>
+      <li>Safe box</li>
+    </ul>
+    <a href="{% url 'home' %}#rooms" class="book-now-button">BOOK NOW</a>
+  </div>
+
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <img src="{% static 'images/1a.jpg' %}" alt="Deluxe Suite - View 1">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1b.jpg' %}" alt="Deluxe Suite - View 2">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1c.jpg' %}" alt="Deluxe Suite - View 3">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1d.jpg' %}" alt="Deluxe Suite - View 4">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1e.jpg' %}" alt="Deluxe Suite - View 5">
+      </div>
+    </div>
+    <button class="prev-arrow">←</button>
+    <button class="next-arrow">→</button>
+  </div>
+</section>
+
+
+<div class="diamond-line-container">
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+<!-- Deluxe Family Suite -->
+<section class="room-section">
+  <div class="room-text">
+    <h3>Deluxe Family Suite</h3>
+    <p><strong>Maximum Occupancy:</strong> 5 ADULTS</p>
+    <p><strong>ROOMS:</strong> 2</p>
+    <p>
+      For the ultimate in luxury, this magnificent suite features a large bedroom 
+      and elegantly appointed sitting room, offering exclusive amenities for an unforgettable stay.
+    </p>
+    <ul class="amenities">
+      <li>Air conditioning</li>
+      <li>LCD TV</li>
+      <li>Mini bar on request</li>
+      <li>Private Bathroom &amp; WC</li>
+      <li>Safe box</li>
+      <li>Tea and Coffee making facilities</li>
+      <li>Hair dryer</li>
+      <li>Hydromassage bath</li>
+      <li>Alarm clock</li>
+    </ul>
+    <a href="{% url 'home' %}#rooms" class="book-now-button">BOOK NOW</a>
+  </div>
+
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <img src="{% static 'images/1a.jpg' %}" alt="Deluxe Family Suite - View 1">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1b.jpg' %}" alt="Deluxe Family Suite - View 2">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1c.jpg' %}" alt="Deluxe Family Suite - View 3">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1d.jpg' %}" alt="Deluxe Family Suite - View 4">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1e.jpg' %}" alt="Deluxe Family Suite - View 5">
+      </div>
+    </div>
+    <button class="prev-arrow">←</button>
+    <button class="next-arrow">→</button>
+  </div>
+</section>
+
+<div class="diamond-line-container">
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+<!-- Presidential Suite -->
+<section class="room-section">
+  <div class="room-text">
+    <h3>Presidential Suite</h3>
+    <p><strong>Maximum Occupancy:</strong> 3 ADULTS</p>
+    <p><strong>ROOMS:</strong> 3</p>
+    <p>
+      For the ultimate in luxury, this magnificent suite features a large bedroom 
+      and elegantly appointed sitting room, offering privacy with access to exclusive amenities.
+    </p>
+    <ul class="amenities">
+      <li>Air conditioning</li>
+      <li>Flat-screen TV</li>
+      <li>Mini bar on request</li>
+      <li>Jacuzzi and shower</li>
+      <li>Private Bathroom &amp; WC</li>
+      <li>Free Wifi</li>
+      <li>Separate living room and bedroom</li>
+      <li>Tea and Coffee making facilities</li>
+      <li>Hair dryer</li>
+      <li>Hydromassage bath</li>
+      <li>Electronic deposit safe</li>
+      <li>24/7 room service</li>
+      <li>Well Equipped Kitchen</li>
+    </ul>
+    <a href="{% url 'home' %}#rooms" class="book-now-button">BOOK NOW</a>
+  </div>
+
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <img src="{% static 'images/2a.jpg' %}" alt="Presidential Suite - View 1">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1b.jpg' %}" alt="Presidential Suite - View 2">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1c.jpg' %}" alt="Presidential Suite - View 3">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1d.jpg' %}" alt="Presidential Suite - View 4">
+      </div>
+      <div class="slide">
+        <img src="{% static 'images/1e.jpg' %}" alt="Presidential Suite - View 5">
+      </div>
+    </div>
+    <button class="prev-arrow">←</button>
+    <button class="next-arrow">→</button>
+  </div>
+</section>
+
+<div class="diamond-line-container">
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // 1) Optional IntersectionObserver for fade-in
+    const sections = document.querySelectorAll('.room-section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in-up');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+
+    // 2) Simple slider logic for each .slider-container
+    const sliderContainers = document.querySelectorAll('.slider-container');
+    sliderContainers.forEach(container => {
+      const slider = container.querySelector('.slider');
+      const slides = container.querySelectorAll('.slide');
+      const prevBtn = container.querySelector('.prev-arrow');
+      const nextBtn = container.querySelector('.next-arrow');
+
+      let currentIndex = 0;
+      const totalSlides = slides.length;
+
+      // Move slides to show the current index
+      function updateSlidePosition() {
+        slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+      }
+
+      // Click: Previous
+      prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex === 0) ? totalSlides - 1 : currentIndex - 1;
+        updateSlidePosition();
+      });
+
+      // Click: Next
+      nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateSlidePosition();
+      });
+
+      // 3) Automatic sliding every 4 seconds
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateSlidePosition();
+      }, 4000); // 4000ms = 4 seconds
+    });
+  });
+</script>
+{% endblock %}

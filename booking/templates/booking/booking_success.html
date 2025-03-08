@@ -1,0 +1,19 @@
+{% extends "booking/base.html" %}
+{% load static %}
+
+{% block title %}Booking Success{% endblock %}
+
+{% block hero_image %}{% static 'images/booking_success.jpg' %}{% endblock %}
+
+{% block hero_content %}
+<h1>Booking Confirmed!</h1>
+<p>Your booking has been confirmed. Thank you for choosing Kilimanjaro Magic Site Hotel.</p>
+{% endblock %}
+
+{% block content %}
+<div class="booking-success-container">
+    <h1>Booking Confirmed!</h1>
+    <p>Your booking has been successfully confirmed. We look forward to hosting you.</p>
+    <a href="{% url 'home' %}">Back to Home</a>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+# Ignore Python bytecode
+__pycache__/
+*.py[cod]
+
+# Ignore virtual environment
+venv/
+
+# Ignore credentials and token
+credentials.json
+token.pickle
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Django stuff:
+*.sqlite3
+db.sqlite3
+/staticfiles/
+
+# Virtual environment
+env/
+venv/
+.env

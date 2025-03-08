@@ -1,0 +1,707 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hotel Booking</title>
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    /* RESET SOME DEFAULTS */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    /* PARALLAX BACKGROUND CONTAINER */
+    .parallax {
+      /* The image used */
+      background: url("{% static 'images/background_image.jpg' %}") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      align-items: center; /* Vertically center .booking-container */
+      justify-content: center;
+    }
+
+    /* BOOKING CONTAINER WITH A LIGHT OVERLAY */
+    .booking-container {
+      position: relative;
+      max-width: 900px;
+      width: 90%; /* Make it responsive on smaller screens */
+      margin: 40px auto;
+      padding: 30px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+    h2 {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    /* STEP INDICATORS (CIRCLES) */
+    .step-indicators {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .step-indicator {
+      display: inline-block;
+      width: 35px;
+      height: 35px;
+      margin: 0 5px;
+      background-color: #e9ecef;
+      border-radius: 50%;
+      line-height: 35px;
+      text-align: center;
+      font-weight: 600;
+      color: #6c757d;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .step-indicator.active {
+      background-color: #007bff;
+      color: #ffffff;
+    }
+
+    /* PROGRESS BAR FOR VISUAL STEPS */
+    .progress {
+      height: 20px;
+      margin-bottom: 20px;
+    }
+    .progress-bar {
+      transition: width 0.4s ease;
+    }
+
+    /* STEP CONTENT + FADE-IN ANIMATION */
+    .step {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+    }
+    .step.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ROOM CARDS (STEP 2) */
+    .room-card {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+      background-color: #fafafa;
+    }
+    .room-card:hover {
+      background-color: #f5f5f5;
+      transform: scale(1.02);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .room-card img {
+      width: 300px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-right: 15px;
+    }
+    .room-info {
+      flex-grow: 1;
+    }
+    .room-info h5 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    .room-info p {
+      margin-bottom: 6px;
+    }
+    .room-info .price {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #28a745;
+    }
+
+    /* FORM & BUTTONS */
+    .form-label {
+      font-weight: 600;
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #004080;
+    }
+    .btn-success {
+      background-color: #28a745;
+      border-color: #28a745;
+    }
+    .btn-success:hover {
+      background-color: #218838;
+      border-color: #1e7e34;
+    }
+
+    /* SOCIAL BUTTONS (STEP 4) */
+    .social-btn img {
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+
+    /* CURRENCY SELECTOR (top-right corner inside .booking-container) */
+    .currency-selector {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+    }
+    .currency-selector label {
+      margin-right: 5px;
+      font-weight: 500;
+    }
+
+    /* SMALL HELPER FOR RESPONSIVE FIELDS IF DESIRED */
+    @media (max-width: 768px) {
+      .room-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .room-card img {
+        width: 100%;
+        margin-bottom: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="parallax"><!-- Parallax wrapper -->
+  <div class="booking-container">
+
+    <!-- Currency Selector -->
+    <div class="currency-selector">
+      <label for="currency-select">Currency:</label>
+      <select id="currency-select" class="form-select form-select-sm">
+        <!-- Default set to TZS as the base currency -->
+        <option value="TZS" selected>TZS</option>
+        <option value="USD">USD</option>
+        <option value="AED">AED</option>
+        <option value="AFN">AFN</option>
+        <option value="AOA">AOA</option>
+        <option value="ARS">ARS</option>
+      </select>
+    </div>
+
+    <h2>Hotel Booking</h2>
+
+    <!-- PROGRESS BAR -->
+    <div class="progress mb-4">
+      <div
+        id="booking-progress"
+        class="progress-bar bg-info"
+        role="progressbar"
+        style="width: 20%;"
+        aria-valuenow="20"
+        aria-valuemin="0"
+        aria-valuemax="100"
+      >
+        Step 1 of 5
+      </div>
+    </div>
+
+    <!-- Step Indicators (if you want to keep them along with the progress bar) -->
+    {% if room %}
+      <div class="step-indicators">
+        <span class="step-indicator active" id="indicator-1">1</span>
+        <span class="step-indicator" id="indicator-2">2</span>
+        <span class="step-indicator" id="indicator-3">3</span>
+        <span class="step-indicator" id="indicator-4">4</span>
+        <span class="step-indicator" id="indicator-5">5</span>
+      </div>
+    {% else %}
+      <div class="step-indicators">
+        <span class="step-indicator active" id="indicator-1">1</span>
+        <span class="step-indicator" id="indicator-2">2</span>
+        <span class="step-indicator" id="indicator-3">3</span>
+        <span class="step-indicator" id="indicator-4">4</span>
+        <span class="step-indicator" id="indicator-5">5</span>
+        <span class="step-indicator" id="indicator-6">6</span>
+      </div>
+    {% endif %}
+
+    <form id="booking-form" method="POST">
+      {% csrf_token %}
+
+      <!-- Step 1: Choose Your Dates -->
+      <div class="step active" id="step-1">
+        <h4>Step 1: Choose Your Dates</h4>
+        <div class="mb-3">
+          <label for="checkin" class="form-label">Check-In Date</label>
+          <input type="date" class="form-control" id="checkin" name="checkin" required />
+        </div>
+        <div class="mb-3">
+          <label for="checkout" class="form-label">Check-Out Date</label>
+          <input type="date" class="form-control" id="checkout" name="checkout" required />
+        </div>
+        <button type="button" class="btn btn-primary" onclick="validateDates()">Next</button>
+      </div>
+
+      {% if not room %}
+      <!-- Step 2: Select Room -->
+      <div class="step" id="step-2">
+        <h4>Step 2: Select Room</h4>
+        <p>Please select the room that best fits your needs:</p>
+
+        <!-- All base prices are now in TZS -->
+        <div class="room-card border" data-base-price="553550">
+          <img src="{% static 'images/room1.jpg' %}" alt="Executive Room + 1 crib" />
+          <div class="room-info">
+            <h5>Executive Room + 1 crib</h5>
+            <p>Max. 3 Guests</p>
+            <p>Executive Room - Private Bathroom with Shower, Bathtub, Bathrobes and Slippers. A/C, Free WiFi, Desk and DSTV.</p>
+            <p class="price" data-price-label>Starting from 553550.00 TZS per night</p>
+            <button type="button" class="btn btn-outline-primary mt-2" onclick="selectRoom(event)">Select</button>
+          </div>
+        </div>
+
+        <div class="room-card border" data-base-price="739721">
+          <img src="{% static 'images/room2.jpg' %}" alt="Executive Triple Room" />
+          <div class="room-info">
+            <h5>Executive Triple Room</h5>
+            <p>Max. 4 Guests</p>
+            <p>Executive Triple Room - Private Bathroom with Shower, Bathtub, Bathrobes and Slippers. A/C, Free WiFi, Desk and DSTV.</p>
+            <p class="price" data-price-label>Starting from 739721.00 TZS per night</p>
+            <button type="button" class="btn btn-outline-primary mt-2" onclick="selectRoom(event)">Select</button>
+          </div>
+        </div>
+
+        <div class="room-card border" data-base-price="1220661">
+          <img src="{% static 'images/room3.jpg' %}" alt="Executive Suite + 1 crib" />
+          <div class="room-info">
+            <h5>Executive Suite + 1 crib</h5>
+            <p>Max. 3 Guests</p>
+            <p>Executive Suite - Private Bathroom with Shower, Bathtub, Bathrobes and Slippers. A/C, Free WiFi, Desk and DSTV.</p>
+            <p class="price" data-price-label>Starting from 1220661.00 TZS per night</p>
+            <button type="button" class="btn btn-outline-primary mt-2" onclick="selectRoom(event)">Select</button>
+          </div>
+        </div>
+
+        <div class="room-card border" data-base-price="840166">
+          <img src="{% static 'images/room4.jpg' %}" alt="Deluxe Suite" />
+          <div class="room-info">
+            <h5>Deluxe Suite</h5>
+            <p>Max. 3 Guests</p>
+            <p>Deluxe Suite with King size bed, Lounge area, Jetted Bathtub and separate shower. 73sqm.</p>
+            <p class="price" data-price-label>Starting from 840166.00 TZS per night</p>
+            <button type="button" class="btn btn-outline-primary mt-2" onclick="selectRoom(event)">Select</button>
+          </div>
+        </div>
+
+        <div class="room-card border" data-base-price="3978000">
+          <img src="{% static 'images/room5.jpg' %}" alt="Presidential Suite + 1 crib" />
+          <div class="room-info">
+            <h5>Presidential Suite + 1 crib</h5>
+            <p>Max. 3 Guests</p>
+            <p>Presidential Suite - Separate Lounge, Kitchen Area, Private Bathroom with Shower, Jetted Bathtub, Bathrobes and Slippers. A/C, Free WiFi, Desk and DSTV.</p>
+            <p class="price" data-price-label>Starting from 3978000.00 TZS per night</p>
+            <button type="button" class="btn btn-outline-primary mt-2" onclick="selectRoom(event)">Select</button>
+          </div>
+        </div>
+
+        <!-- Hidden input to store selected room details -->
+        <input type="hidden" id="selected-room" name="selected_room" />
+        <button type="button" class="btn btn-secondary me-2" onclick="prevStep()">Previous</button>
+        <button type="button" class="btn btn-primary" onclick="validateRoomSelection()">Next</button>
+      </div>
+      {% else %}
+        <!-- If room is pre-selected, store its id -->
+        <input type="hidden" id="selected-room" name="selected_room" value="{{ room.id }}">
+      {% endif %}
+
+      <!-- Step 3 (or 2 if pre-selected): Add Services -->
+      <div class="step" id="{% if room %}step-2{% else %}step-3{% endif %}">
+        <h4>Step {% if room %}2{% else %}3{% endif %}: Add Services</h4>
+        <div class="form-check mb-2">
+          <!-- Prices here are now in TZS (e.g. Breakfast: 50 USD ≈ 117000 TZS) -->
+          <input class="form-check-input" type="checkbox" value="117000" data-service-base-price="117000" id="breakfast">
+          <label class="form-check-label" for="breakfast" data-service-label data-service-name="Breakfast">Breakfast</label>
+        </div>
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" value="70200" data-service-base-price="70200" id="airport-pickup">
+          <label class="form-check-label" for="airport-pickup" data-service-label data-service-name="Airport Pickup">Airport Pickup</label>
+        </div>
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" value="46800" data-service-base-price="46800" id="wifi">
+          <label class="form-check-label" for="wifi" data-service-label data-service-name="Wi-Fi">Wi-Fi</label>
+        </div>
+        <button type="button" class="btn btn-secondary me-2" onclick="prevStep()">Previous</button>
+        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+      </div>
+
+      <!-- Step 4 (or 3 if pre-selected): Guest Information -->
+      <div class="step" id="{% if room %}step-3{% else %}step-4{% endif %}">
+        <h4>Step {% if room %}3{% else %}4{% endif %}: Guest Information</h4>
+        <div class="mb-3">
+          <label for="guest-name" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="guest-name" name="guest_name" required>
+        </div>
+        <div class="mb-3">
+          <label for="guest-email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="guest-email" name="guest_email" required
+                 pattern="[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+"
+                 oninvalid="this.setCustomValidity('Please include an @ in the email address. For example, name@example.com')"
+                 oninput="this.setCustomValidity('')">
+        </div>
+        <div class="mb-3">
+          <label for="guest-phone" class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" id="guest-phone" name="guest_phone" required>
+        </div>
+        <div class="mb-3">
+          <p>Or sign in with:</p>
+          <a href="#" class="btn btn-outline-danger social-btn me-2">
+            <img src="{% static 'images/google_logo.png' %}" width="20" alt="Google">Google
+          </a>
+          <a href="#" class="btn btn-outline-primary social-btn">
+            <img src="{% static 'images/facebook_logo.png' %}" width="20" alt="Facebook">Facebook
+          </a>
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
+          <label class="form-check-label" for="terms">I accept the <a href="#">Terms and Conditions</a></label>
+        </div>
+        <button type="button" class="btn btn-secondary me-2" onclick="prevStep()">Previous</button>
+        <button type="button" class="btn btn-primary" onclick="validateGuestInfo()">Next</button>
+      </div>
+
+      <!-- Step 5 (or 4 if pre-selected): Payment Method -->
+      <div class="step" id="{% if room %}step-4{% else %}step-5{% endif %}">
+        <h4>Step {% if room %}4{% else %}5{% endif %}: Payment Method (Credit Card)</h4>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="card-name" class="form-label">Name on Card</label>
+            <input type="text" class="form-control" id="card-name" name="card_name" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="card-number" class="form-label">Card Number</label>
+            <input type="text" class="form-control" id="card-number" name="card_number" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="card-expiry" class="form-label">Expiry (MM/YY)</label>
+            <input type="text" class="form-control" id="card-expiry" name="card_expiry" placeholder="MM/YY" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="card-cvv" class="form-label">CVV</label>
+            <input type="text" class="form-control" id="card-cvv" name="card_cvv" placeholder="3 or 4 digits" required>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary me-2" onclick="prevStep()">Previous</button>
+        <button type="button" class="btn btn-primary" onclick="validatePayment()">Next</button>
+      </div>
+
+      <!-- Step 6 (or 5 if pre-selected): Confirm Booking -->
+      <div class="step" id="{% if room %}step-5{% else %}step-6{% endif %}">
+        <h4>Step {% if room %}5{% else %}6{% endif %}: Confirm Booking</h4>
+        <div id="summary"></div>
+
+        <!-- Hidden Total Cost Input Field -->
+        <input type="hidden" id="total_cost" name="total_cost">
+
+        <button type="button" class="btn btn-secondary me-2" onclick="prevStep()">Previous</button>
+        <button type="submit" class="btn btn-success">Confirm Booking</button>
+      </div>
+    </form>
+  </div> <!-- .booking-container -->
+</div> <!-- .parallax -->
+
+<!-- Bootstrap JS Bundle (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  /****************************************
+   * Global Variables and Conversion Rates
+   ****************************************/
+  let currentStep = 1;
+  let selectedRoomDetails = { name: '', basePriceTZS: 0 };
+
+  // Conversion rates: base price is in TZS.
+  // Example: if 1 USD = 2340 TZS, then price_in_USD = price_in_TZS / 2340.
+  const conversionRates = {
+    TZS: 1,
+    USD: 2340,
+    AED: 637.89,
+    AFN: 26.44,
+    AOA: 4.65,
+    ARS: 11.94
+  };
+
+  let selectedCurrency = document.getElementById('currency-select').value;
+  const currencySelect = document.getElementById('currency-select');
+  currencySelect.addEventListener('change', () => {
+    selectedCurrency = currencySelect.value;
+    updateCurrencyDisplay();
+  });
+
+  var preSelectedRoom = {% if room %} true {% else %} false {% endif %};
+  var maxSteps = preSelectedRoom ? 5 : 6;
+
+  {% if room %}
+    selectedRoomDetails.name = "{{ room.name|escapejs }}";
+    selectedRoomDetails.basePriceTZS = {{ room.price_per_night }};
+  {% endif %}
+
+  /****************************************
+   * Show Step + Update Step Indicators + Update Progress Bar
+   ****************************************/
+  function showStep(step) {
+    // Hide all steps
+    document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+    // Show the current step
+    document.getElementById('step-' + step).classList.add('active');
+
+    // Update circle indicators
+    let indicators = document.querySelectorAll('.step-indicator');
+    indicators.forEach((el, index) => {
+      let indicatorStep = index + 1;
+      if (indicatorStep <= step) {
+        el.classList.add('active');
+      } else {
+        el.classList.remove('active');
+      }
+    });
+
+    // Update progress bar
+    updateProgressBar();
+  }
+
+  function updateProgressBar() {
+    const progressBar = document.getElementById('booking-progress');
+    const percentage = (currentStep / maxSteps) * 100;
+    progressBar.style.width = percentage + '%';
+    progressBar.textContent = `Step ${currentStep} of ${maxSteps}`;
+  }
+
+  function nextStep() {
+    if (currentStep < maxSteps) {
+      currentStep++;
+      showStep(currentStep);
+      if (currentStep === maxSteps) {
+        generateSummary();
+      }
+    }
+  }
+
+  function prevStep() {
+    if (currentStep > 1) {
+      currentStep--;
+      showStep(currentStep);
+    }
+  }
+
+  /****************************************
+   * Step 1: Validate Dates
+   ****************************************/
+  function validateDates() {
+    const checkinInput = document.getElementById('checkin');
+    const checkoutInput = document.getElementById('checkout');
+
+    const checkin = checkinInput.value;
+    const checkout = checkoutInput.value;
+
+    if (!checkin || !checkout) {
+      alert("Please select both check-in and check-out dates.");
+      return;
+    }
+
+    const checkinDate = new Date(checkin);
+    const checkoutDate = new Date(checkout);
+    const today = new Date();
+
+    // Ensure check-in date is today or later
+    if (checkinDate < today.setHours(0,0,0,0)) {
+      alert("Check-in date cannot be in the past.");
+      checkinInput.value = "";
+      return;
+    }
+
+    // Ensure check-out is after check-in
+    if (checkoutDate <= checkinDate) {
+      alert("Check-out date must be at least one day after the check-in date.");
+      checkoutInput.value = "";
+      return;
+    }
+
+    nextStep();
+  }
+
+  /****************************************
+   * Step 2: Room Selection (if needed)
+   ****************************************/
+  function selectRoom(event) {
+    const roomCard = event.target.closest('.room-card');
+    if (!roomCard) return;
+    const basePriceTZS = parseFloat(roomCard.getAttribute('data-base-price')) || 0;
+    const roomName = roomCard.querySelector('h5').innerText;
+    selectedRoomDetails.name = roomName;
+    selectedRoomDetails.basePriceTZS = basePriceTZS;
+
+    // Highlight selected card
+    document.querySelectorAll('.room-card').forEach(card => card.classList.remove('border-primary'));
+    roomCard.classList.add('border-primary');
+  }
+
+  function validateRoomSelection() {
+    if (!selectedRoomDetails.name) {
+      alert('Please select a room.');
+      return;
+    }
+    nextStep();
+  }
+
+  /****************************************
+   * Step 4: Validate Guest Information
+   ****************************************/
+  function validateGuestInfo() {
+    const guestName = document.getElementById('guest-name').value.trim();
+    const guestEmail = document.getElementById('guest-email');
+    const guestPhone = document.getElementById('guest-phone').value.trim();
+    const terms = document.getElementById('terms').checked;
+
+    if (!guestName || !guestPhone) {
+      alert("Please fill in all required guest information fields.");
+      return;
+    }
+    if (!guestEmail.checkValidity()) {
+      guestEmail.reportValidity();
+      return;
+    }
+    if (!terms) {
+      alert("You must accept the terms and conditions to continue.");
+      return;
+    }
+    nextStep();
+  }
+
+  /****************************************
+   * Step 5: Validate Payment Information
+   ****************************************/
+  function validatePayment() {
+    const cardName = document.getElementById('card-name').value.trim();
+    const cardNumber = document.getElementById('card-number').value.trim();
+    const cardExpiry = document.getElementById('card-expiry').value.trim();
+    const cardCVV = document.getElementById('card-cvv').value.trim();
+
+    if (!cardName || !cardNumber || !cardExpiry || !cardCVV) {
+      alert("Please fill in all credit card details.");
+      return;
+    }
+    if (cardNumber.length < 12) {
+      alert("Please enter a valid card number.");
+      return;
+    }
+    nextStep();
+  }
+
+  /****************************************
+   * Final Step: Generate Summary
+   ****************************************/
+  function generateSummary() {
+    const checkin = document.getElementById('checkin').value;
+    const checkout = document.getElementById('checkout').value;
+    const checkinDate = new Date(checkin);
+    const checkoutDate = new Date(checkout);
+
+    let nights = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+    if (isNaN(nights) || nights <= 0) nights = 1;
+
+    const convertedRoomPrice = selectedRoomDetails.basePriceTZS / conversionRates[selectedCurrency];
+    const roomTotal = convertedRoomPrice * nights;
+
+    let services = [];
+    let servicesCost = 0;
+    const serviceCheckboxes = document.querySelectorAll('[data-service-base-price]');
+    serviceCheckboxes.forEach(checkbox => {
+      if (checkbox.checked) {
+        const baseServicePrice = parseFloat(checkbox.getAttribute('data-service-base-price')) || 0;
+        const convertedServicePrice = baseServicePrice / conversionRates[selectedCurrency];
+        servicesCost += convertedServicePrice;
+        services.push(checkbox.nextElementSibling.getAttribute('data-service-name'));
+      }
+    });
+
+    const guestName = document.getElementById('guest-name').value.trim();
+    const guestEmail = document.getElementById('guest-email').value.trim();
+    const guestPhone = document.getElementById('guest-phone').value.trim();
+    const cardName = document.getElementById('card-name').value.trim();
+    const cardNumber = document.getElementById('card-number').value.trim();
+
+    const totalCost = roomTotal + servicesCost;
+    document.getElementById('total_cost').value = totalCost.toFixed(2);
+
+    let summaryHTML = `
+      <p><strong>Dates:</strong> ${checkin} to ${checkout} (${nights} night${nights > 1 ? 's' : ''})</p>
+      <p><strong>Room Selected:</strong> ${selectedRoomDetails.name} ( ${convertedRoomPrice.toFixed(2)} ${selectedCurrency} per night x ${nights} = ${roomTotal.toFixed(2)} ${selectedCurrency} )</p>
+      <p><strong>Additional Services:</strong> ${services.length > 0 ? services.join(', ') : 'None'}</p>
+      <p><strong>Guest Name:</strong> ${guestName}</p>
+      <p><strong>Email:</strong> ${guestEmail}</p>
+      <p><strong>Phone:</strong> ${guestPhone}</p>
+      <p><strong>Card Holder:</strong> ${cardName}</p>
+      <p><strong>Card Number:</strong> ****-****-****-${cardNumber.slice(-4)}</p>
+      <p><strong>Total Cost:</strong> ${totalCost.toFixed(2)} ${selectedCurrency}</p>
+    `;
+    document.getElementById('summary').innerHTML = summaryHTML;
+  }
+
+  /****************************************
+   * Currency Conversion Display Update
+   ****************************************/
+  function updateCurrencyDisplay() {
+    // Update room prices
+    const roomCards = document.querySelectorAll('.room-card');
+    roomCards.forEach(card => {
+      const basePriceTZS = parseFloat(card.getAttribute('data-base-price')) || 0;
+      const convertedPrice = basePriceTZS / conversionRates[selectedCurrency];
+      const priceLabel = card.querySelector('[data-price-label]');
+      if (priceLabel) {
+        priceLabel.textContent = `Starting from ${convertedPrice.toFixed(2)} ${selectedCurrency} per night`;
+      }
+    });
+
+    // Update service prices
+    const serviceLabels = document.querySelectorAll('[data-service-label]');
+    serviceLabels.forEach(label => {
+      const input = label.previousElementSibling;
+      const baseServicePriceTZS = parseFloat(input.getAttribute('data-service-base-price')) || 0;
+      const convertedServicePrice = baseServicePriceTZS / conversionRates[selectedCurrency];
+      label.textContent = label.getAttribute('data-service-name') + ` (${convertedServicePrice.toFixed(2)} ${selectedCurrency})`;
+    });
+
+    // If we're on the final step, refresh summary
+    if (currentStep === maxSteps) {
+      generateSummary();
+    }
+  }
+
+  /****************************************
+   * Final Submission
+   ****************************************/
+  document.getElementById('booking-form').addEventListener('submit', function(e) {
+    // Let form submit normally, but show an alert first
+    alert('Booking Confirmed! Thank you, ' + document.getElementById('guest-name').value);
+  });
+
+  // Initialize the first step & currency display
+  showStep(currentStep);
+  updateCurrencyDisplay();
+</script>
+</body>
+</html>

@@ -1,0 +1,465 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Multi-Step Booking</title>
+  <!-- Include Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-ac/1w2KexJm..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Link to your style.css -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="booking-overlay">
+    <!-- Step Wizard Navigation (5 steps) -->
+    <div class="step-wizard">
+      <div class="step active" data-step="1">
+        <span class="step-number">1</span>
+        <span class="step-label">Room & Guest</span>
+      </div>
+      <div class="step" data-step="2">
+        <span class="step-number">2</span>
+        <span class="step-label">Arrival Date</span>
+      </div>
+      <div class="step" data-step="3">
+        <span class="step-number">3</span>
+        <span class="step-label">Nights & Price</span>
+      </div>
+      <div class="step" data-step="4">
+        <span class="step-number">4</span>
+        <span class="step-label">Guest Info</span>
+      </div>
+      <div class="step" data-step="5">
+        <span class="step-number">5</span>
+        <span class="step-label">Confirm</span>
+      </div>
+    </div>
+
+    <!-- Multi-Step Form -->
+    <form method="post" class="booking-wizard-form">
+      {% csrf_token %}
+
+      <!-- STEP 1: Room & Guest Selection -->
+      <fieldset class="form-step active" data-step="1">
+        <h2>Step 1: Select Number of Guests</h2>
+        <div id="rooms-container">
+          <!-- Rooms inserted dynamically -->
+        </div>
+        <a href="#" id="add-room" class="add-room-link">
+          <i class="fas fa-plus"></i> Add another room
+        </a>
+        <div class="wizard-buttons">
+          <button type="button" class="next-step">Next</button>
+        </div>
+      </fieldset>
+
+      <!-- STEP 2: Arrival Date -->
+      <fieldset class="form-step" data-step="2">
+        <h2>Step 2: Arrival Date</h2>
+        <div class="form-group">
+          <label for="arrival-date">Select Arrival Date <span style="color:red">*</span></label>
+          <input type="date" id="arrival-date" name="arrival_date" required>
+        </div>
+        <div class="wizard-buttons">
+          <button type="button" class="prev-step">Previous</button>
+          <button type="button" class="next-step">Next</button>
+        </div>
+      </fieldset>
+
+      <!-- STEP 3: Nights & Price -->
+      <fieldset class="form-step" data-step="3">
+        <h2>Step 3: Select Number of Nights</h2>
+        <div id="nights-list">
+          <!-- Nights options generated dynamically after choosing arrival date -->
+        </div>
+        <div class="wizard-buttons">
+          <button type="button" class="prev-step">Previous</button>
+          <button type="button" class="next-step">Next</button>
+        </div>
+      </fieldset>
+
+      <!-- STEP 4: Guest Info (Two-Column Layout) -->
+      <fieldset class="form-step" data-step="4">
+        <div class="two-column-container">
+          <!-- LEFT: Trip Summary -->
+          <div class="trip-summary">
+            <h2>Trip Summary</h2>
+            <div class="summary-details" id="summary-details">
+              <!-- Populated dynamically from previous steps -->
+            </div>
+          </div>
+          <!-- RIGHT: Guest Info Form -->
+          <div class="guest-info-col">
+            <h2>Guest Information</h2>
+            <div class="social-signin">
+              <a href="#" class="social-button facebook">
+                <i class="fab fa-facebook-f"></i> Facebook
+              </a>
+              <a href="#" class="social-button google">
+                <i class="fab fa-google"></i> Google
+              </a>
+            </div>
+            <div class="guest-details">
+              <div class="form-group">
+                <label for="first_name">First Name *</label>
+                <input type="text" id="first_name" name="first_name" required>
+              </div>
+              <div class="form-group">
+                <label for="last_name">Last Name *</label>
+                <input type="text" id="last_name" name="last_name" required>
+              </div>
+              <div class="form-group fullwidth">
+                <label for="address">Address *</label>
+                <input type="text" id="address" name="address" required>
+              </div>
+              <div class="form-group fullwidth">
+                <label for="address2">Address 2</label>
+                <input type="text" id="address2" name="address2">
+              </div>
+              <div class="form-group">
+                <label for="city">City *</label>
+                <input type="text" id="city" name="city" required>
+              </div>
+              <div class="form-group">
+                <label for="zip">Post/Zip Code</label>
+                <input type="text" id="zip" name="zip">
+              </div>
+              <div class="form-group">
+                <label for="country_state">Country/State *</label>
+                <input type="text" id="country_state" name="country_state" required>
+              </div>
+              <div class="form-group">
+                <label for="telephone">Telephone *</label>
+                <input type="tel" id="telephone" name="telephone" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+              <div class="form-group">
+                <label for="confirm_email">Confirm Email *</label>
+                <input type="email" id="confirm_email" name="confirm_email" required>
+              </div>
+            </div>
+            <div class="privacy-policy">
+              <input type="checkbox" id="privacy_policy" required>
+              <label for="privacy_policy">I have read the privacy policy</label>
+            </div>
+          </div>
+        </div>
+        <div class="wizard-buttons">
+          <button type="button" class="prev-step">Previous</button>
+          <button type="button" class="next-step">Next</button>
+        </div>
+      </fieldset>
+
+      <!-- STEP 5: Confirm Booking -->
+      <fieldset class="form-step" data-step="5">
+        <h2>Step 5: Confirm Booking</h2>
+        <div class="confirmation-summary">
+          <div class="summary-details" id="final-summary">
+            <!-- Final summary from steps 1-4 goes here -->
+          </div>
+        </div>
+        <div class="wizard-buttons">
+          <button type="button" class="prev-step">Previous</button>
+          <button type="submit" class="confirm-button">Confirm Booking</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const steps = document.querySelectorAll(".step-wizard .step");
+      const formSteps = document.querySelectorAll(".form-step");
+      let currentStep = 1;
+
+      function showStep(step) {
+        currentStep = step;
+        steps.forEach(elem => {
+          const stepNum = parseInt(elem.getAttribute("data-step"));
+          elem.classList.toggle("active", stepNum === step);
+        });
+        formSteps.forEach(fs => {
+          const fsStep = parseInt(fs.getAttribute("data-step"));
+          fs.classList.toggle("active", fsStep === step);
+        });
+        if (currentStep === 5) {
+          populateFinalSummary();
+        }
+      }
+
+      // Next / Previous Step
+      document.querySelectorAll(".next-step").forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (validateStep(currentStep)) {
+            if (currentStep < formSteps.length) {
+              showStep(currentStep + 1);
+            }
+          } else {
+            alert("Please fill all required fields (or fix errors) before proceeding.");
+          }
+        });
+      });
+      document.querySelectorAll(".prev-step").forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (currentStep > 1) {
+            showStep(currentStep - 1);
+          }
+        });
+      });
+
+      function validateStep(step) {
+        // Basic required fields check
+        const fs = document.querySelector(`.form-step[data-step="${step}"]`);
+        const requiredFields = fs.querySelectorAll("[required]");
+        let valid = true;
+        requiredFields.forEach(field => {
+          if (!field.value.trim()) {
+            field.classList.add("invalid");
+            valid = false;
+          } else {
+            field.classList.remove("invalid");
+          }
+        });
+        return valid;
+      }
+
+      // ------------------ STEP 1: ROOM & GUEST SELECTION ------------------
+      const roomsContainer = document.getElementById("rooms-container");
+      const addRoomLink = document.getElementById("add-room");
+      let roomCount = 0;
+
+      function addRoom() {
+        roomCount++;
+        const roomDiv = document.createElement("div");
+        roomDiv.classList.add("room");
+        roomDiv.innerHTML = `
+          <div class="room-header">
+            <span>Room ${roomCount}</span>
+            <button type="button" class="remove-room"><i class="fas fa-times"></i></button>
+          </div>
+          <div class="room-body">
+            <div class="small-field">
+              <label>Adults</label>
+              <div class="plus-minus">
+                <button type="button" class="minus-adult"><i class="fas fa-minus"></i></button>
+                <input type="number" class="adult-count" value="2" readonly>
+                <button type="button" class="plus-adult"><i class="fas fa-plus"></i></button>
+              </div>
+            </div>
+            <div class="small-field">
+              <label>Children</label>
+              <div class="plus-minus">
+                <button type="button" class="minus-child"><i class="fas fa-minus"></i></button>
+                <input type="number" class="child-count" value="0" readonly>
+                <button type="button" class="plus-child"><i class="fas fa-plus"></i></button>
+              </div>
+            </div>
+            <div class="child-ages" style="display:none;">
+              <label>Children's ages (0-11)</label>
+              <div class="child-age-fields">
+                <!-- Insert <select> or something for each child -->
+              </div>
+            </div>
+          </div>
+        `;
+        roomsContainer.appendChild(roomDiv);
+        attachRoomEvents(roomDiv);
+      }
+
+      function attachRoomEvents(roomDiv) {
+        const removeBtn = roomDiv.querySelector(".remove-room");
+        removeBtn.addEventListener("click", () => {
+          roomDiv.remove();
+        });
+
+        const minusAdult = roomDiv.querySelector(".minus-adult");
+        const plusAdult = roomDiv.querySelector(".plus-adult");
+        const adultInput = roomDiv.querySelector(".adult-count");
+
+        const minusChild = roomDiv.querySelector(".minus-child");
+        const plusChild = roomDiv.querySelector(".plus-child");
+        const childInput = roomDiv.querySelector(".child-count");
+
+        const childAgesDiv = roomDiv.querySelector(".child-ages");
+        const childAgeFieldsContainer = roomDiv.querySelector(".child-age-fields");
+
+        plusAdult.addEventListener("click", () => {
+          let a = parseInt(adultInput.value);
+          let c = parseInt(childInput.value);
+          if (a + c < 4) {
+            adultInput.value = a + 1;
+            updateChildAges();
+          }
+        });
+        minusAdult.addEventListener("click", () => {
+          let a = parseInt(adultInput.value);
+          if (a > 1) {
+            adultInput.value = a - 1;
+            updateChildAges();
+          }
+        });
+        plusChild.addEventListener("click", () => {
+          let a = parseInt(adultInput.value);
+          let c = parseInt(childInput.value);
+          if (a + c < 4) {
+            childInput.value = c + 1;
+            updateChildAges();
+          }
+        });
+        minusChild.addEventListener("click", () => {
+          let c = parseInt(childInput.value);
+          if (c > 0) {
+            childInput.value = c - 1;
+            updateChildAges();
+          }
+        });
+
+        function updateChildAges() {
+          let c = parseInt(childInput.value);
+          if (c > 0) {
+            childAgesDiv.style.display = "block";
+          } else {
+            childAgesDiv.style.display = "none";
+          }
+          // Rebuild child-age fields
+          childAgeFieldsContainer.innerHTML = "";
+          for (let i = 0; i < c; i++) {
+            const sel = document.createElement("select");
+            sel.innerHTML = `
+              <option value="<1"><1</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              ...
+              <option value="10">10</option>
+              <option value="11">11</option>
+            `;
+            childAgeFieldsContainer.appendChild(sel);
+          }
+        }
+      }
+
+      addRoomLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        addRoom();
+      });
+
+      // Initialize with 1 room
+      addRoom();
+
+      // ------------------ STEP 2: ARRIVAL DATE ------------------
+      const arrivalDateInput = document.getElementById("arrival-date");
+
+      // ------------------ STEP 3: Nights & Price Selection ------------------
+      const nightsList = document.getElementById("nights-list");
+      arrivalDateInput.addEventListener("change", () => {
+        nightsList.innerHTML = "";
+        if (!arrivalDateInput.value) return;
+        const arrival = new Date(arrivalDateInput.value);
+
+        // Generate 1..7 nights
+        for (let n = 1; n <= 7; n++) {
+          let price = (285.09 * n).toFixed(2);
+          let checkout = new Date(arrival);
+          checkout.setDate(checkout.getDate() + n);
+          let dateStr = checkout.toDateString();
+          let div = document.createElement("div");
+          div.classList.add("night-option");
+          div.innerHTML = `
+            <p>${n} night${n>1?"s":""} - ${dateStr} - ${price} USD</p>
+            <button type="button" class="select-night" data-nights="${n}" data-price="${price}">Select</button>
+          `;
+          nightsList.appendChild(div);
+        }
+        // Additional nights (8..30)
+        let customDiv = document.createElement("div");
+        customDiv.innerHTML = `<label>Or enter nights (8-30):</label> 
+          <input type="number" id="custom-nights" min="8" max="30" placeholder="8-30"> 
+          <button type="button" id="custom-nights-btn">Select</button>`;
+        nightsList.appendChild(customDiv);
+      });
+
+      nightsList.addEventListener("click", (e) => {
+        if (e.target.classList.contains("select-night")) {
+          let nights = e.target.getAttribute("data-nights");
+          let price = e.target.getAttribute("data-price");
+          storeNightsSelection(nights, price);
+        }
+        if (e.target.id === "custom-nights-btn") {
+          let val = document.getElementById("custom-nights").value;
+          if (val >= 8 && val <= 30) {
+            let price = (285.09 * val).toFixed(2);
+            storeNightsSelection(val, price);
+          } else {
+            alert("Please enter a valid number of nights (8-30).");
+          }
+        }
+      });
+
+      let selectedNights = 0;
+      let selectedPrice = 0;
+      function storeNightsSelection(n, p) {
+        selectedNights = n;
+        selectedPrice = p;
+        alert(`You selected ${n} night(s) with price: $${p}`);
+      }
+
+      // ------------------ STEP 4: Summaries in the "Trip Summary" box ------------------
+      const summaryDetailsDiv = document.getElementById("summary-details");
+
+      function buildStep4Summary() {
+        let arrVal = arrivalDateInput.value || "(not chosen)";
+        let text = `<p>Arrival: ${arrVal}</p>`;
+        text += `<p>Nights: ${selectedNights || 0}</p>`;
+        text += `<p>Total Price: $${selectedPrice || 0}</p>`;
+
+        // Count rooms & total guests
+        let roomDivs = document.querySelectorAll(".room");
+        let totalRooms = roomDivs.length;
+        let totalAdults = 0;
+        let totalChildren = 0;
+        roomDivs.forEach(rd => {
+          let a = parseInt(rd.querySelector(".adult-count").value);
+          let c = parseInt(rd.querySelector(".child-count").value);
+          totalAdults += a;
+          totalChildren += c;
+        });
+        text += `<p>Rooms: ${totalRooms}</p>`;
+        text += `<p>Guests: ${totalAdults} adults, ${totalChildren} children</p>`;
+
+        summaryDetailsDiv.innerHTML = text;
+      }
+
+      // When entering step 4
+      // We'll rebuild summary
+      function onEnterStep4() {
+        buildStep4Summary();
+      }
+
+      // ------------------ STEP 5: Final Confirmation ------------------
+      const finalSummaryDiv = document.getElementById("final-summary");
+      function populateFinalSummary() {
+        // Combine the same summary, plus guest name/email if you want
+        let nameVal = document.getElementById("first_name").value + " " + document.getElementById("last_name").value;
+        finalSummaryDiv.innerHTML = `
+          <h3>Final Summary</h3>
+          ${summaryDetailsDiv.innerHTML}
+          <p>Guest Name: ${nameVal}</p>
+        `;
+      }
+
+      // Hook to step changes
+      document.querySelectorAll(".next-step").forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (currentStep === 3 && validateStep(3)) {
+            // Going from Step 3 to Step 4 => build summary
+            onEnterStep4();
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

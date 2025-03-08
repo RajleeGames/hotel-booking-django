@@ -1,0 +1,371 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Kilimanjaro Magic Site{% endblock %}</title>
+  
+  <!-- Your main stylesheet -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!-- Load Font Awesome for footer icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  
+  <!-- INLINE STYLES FOR HEADER POSITION + HAMBURGER MENU -->
+<style>
+  /*************************************************
+   * 1) HEADER POSITIONING & SIZE FIXES
+   *************************************************/
+  .main-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: transparent; /* Transparent so hero shows behind */
+    z-index: 9999;           
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    height: 60px; /* Reduce height */
+  }
+  
+  /* Mobile: Fix position & background */
+  @media (max-width: 768px) {
+    .main-header {
+      position: fixed;
+      background-color: white;
+      height: 70px; /* Smaller header */
+      padding: 5px 15px; /* Less padding */
+    }
+  }
+  
+  /*************************************************
+   * 2) LOGO FIX (Ensure Proper Scaling)
+   *************************************************/
+  .logo {
+    max-width: 150px; /* Prevent oversized logos */
+    height: auto;
+  }
+  
+  /*************************************************
+   * 3) HAMBURGER MENU & MOBILE NAV TOGGLE
+   *************************************************/
+  .hamburger {
+    display: none; /* Hidden on desktop, shown on mobile */
+    flex-direction: column;
+    cursor: pointer;
+    margin-right: 10px;
+    width: 30px; /* Reduce size */
+    height: 30px; 
+  }
+  
+  .hamburger span {
+    height: 3px;
+    width: 100%;
+    background: #333; /* Match nav text */
+    margin: 4px 0;
+    transition: all 0.3s ease;
+  }
+  
+  /* Lines-to-X animation */
+  .hamburger.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+  
+  /*************************************************
+   * 4) MOBILE NAV FIXES (Better Layout & Smoother Transition)
+   *************************************************/
+  @media (max-width: 768px) {
+    .hamburger {
+      display: flex; /* Show on mobile */
+    }
+  
+    .main-nav {
+      position: fixed;
+      top: 0;
+      right: -250px; /* Hide offscreen initially */
+      width: 250px;
+      height: 100vh;
+      background-color: #222;
+      box-shadow: -5px 0 10px rgba(0, 0, 0, 0.3);
+      flex-direction: column; 
+      padding: 20px;
+      z-index: 9999;
+      transition: right 0.4s ease-in-out; /* Smooth sliding */
+    }
+  
+    /* Open state (menu slides in) */
+    .main-nav.open {
+      right: 0;
+    }
+  
+    /* Close button */
+    .close-btn {
+      display: block;
+      font-size: 1.8rem;
+      color: #fff;
+      cursor: pointer;
+      position: absolute;
+      top: 15px;
+      right: 20px;
+    }
+  
+    /* Move menu items to the top */
+    .nav-links {
+      list-style: none;
+      flex-direction: column;
+      align-items: flex-start;
+      padding-top: 50px; /* Push menu items up */
+      margin: 0;
+    }
+  
+    .nav-links li {
+      width: 100%;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  
+    .nav-links li:last-child {
+      border-bottom: none; /* Remove border for last item */
+    }
+  
+    .nav-links li a {
+      color: #fff; 
+      font-size: 16px; /* Improve readability */
+      font-weight: bold;
+      text-decoration: none;
+      display: block;
+      padding-left: 10px;
+      transition: color 0.3s ease;
+    }
+  
+    .nav-links li a:hover {
+      color: #f8b400; /* Highlight color */
+    }
+  
+    /* "Book Now" Button Fix: Show it outside mobile menu */
+    .book-now-container {
+      display: block;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+  
+    .book-now-container a {
+      background-color: #f8b400;
+      color: #fff;
+      padding: 10px 20px;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 5px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+      transition: background 0.3s ease;
+    }
+  
+    .book-now-container a:hover {
+      background-color: #e09e00;
+    }
+  }
+  
+  /*************************************************
+   * 5) FOOTER RESPONSIVENESS FIXES
+   *************************************************/
+ 
+  .footer-column {
+    flex: 1;
+    min-width: 250px;
+    padding: 10px;
+  }
+  
+  /* Make footer stack on mobile */
+  @media (max-width: 768px) {
+    .footer-container {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .footer-column {
+      margin-bottom: 15px;
+    }
+  }
+  </style>
+  
+</head>
+<body>
+
+  <!-- HEADER / NAVIGATION -->
+  <!-- Remove any inline style here; we handle position with the CSS above -->
+  <header class="main-header">
+    <div class="logo-container">
+      <!-- Use your actual logo here -->
+      <img src="{% static 'images/background.png' %}" alt="Hotel Logo" class="logo">
+    </div>
+
+    <!-- HAMBURGER for Mobile -->
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- MAIN NAV -->
+    <nav class="main-nav">
+      <!-- The close button (X) for mobile; hidden on desktop -->
+      <span class="close-btn" onclick="toggleMenu()">&times;</span>
+
+      <!-- Nav links -->
+      <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'accommodation' %}">Accommodation</a></li>
+        <li><a href="{% url 'dine_wine' %}">Dine &amp; Wine</a></li>
+        <li><a href="{% url 'events_conferences' %}">Events &amp; Conferences</a></li>
+        <li><a href="{% url 'wellness_centre' %}">Wellness Centre</a></li>
+        <li><a href="{% url 'upcoming_events' %}">Upcoming Events</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+      </ul>
+
+      <!-- Book Now button (desktop only) -->
+      <div class="book-now-container">
+        <a href="{% url 'home' %}#rooms" class="book-now-button">Book Now</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO SECTION: The hero image will appear behind the nav on desktop -->
+  <div class="hero-section" style="background-image: url({% block hero_image %}{% endblock %});">
+    <div class="hero-overlay">
+      {% block hero_content %}{% endblock %}
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT AREA -->
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <!-- FOOTER SECTION -->
+  <footer class="footer-section">
+    <!-- Footer Top: Red background -->
+    <div class="footer-top">
+      <h2>KEEP IN TOUCH</h2>
+      <ul class="social-icons">
+        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+        <li><a href="#"><i class="fab fa-tiktok"></i></a></li>
+      </ul>
+    </div>
+   
+    <!-- Footer Bottom: White background -->
+    <div class="footer-bottom">
+      <div class="footer-container">
+        <!-- Column 1: Telephone & Email -->
+        <div class="footer-column">
+          <h3>CONTACT</h3>
+          <p>
+            <i class="fas fa-phone-alt"></i> <strong>TEL:</strong> 
+            <a href="tel:+255753000666">+255 753 000 666</a><br>
+            <i class="fas fa-fax"></i> <strong>FAX:</strong> 
+            <a href="tel:+25527297062">+255 27 29 70 062</a>
+          </p>
+          <h3>EMAIL</h3>
+          <p>
+            <i class="fas fa-envelope"></i> <strong>:</strong> 
+            <a href="mailto:mirajially999@gmail.com">mirajially999@gmail.com</a>
+          </p>
+        </div>
+    
+        <!-- Column 2: Address -->
+        <div class="footer-column">
+          <h3>ADDRESS</h3>
+          <p>P. O. BOX 7756,</p>
+          <p>KILIMAJARO MAGIC SITE B&B AND HOTELS,</p>
+          <p>MBUYUNI ROAD, MOSHI,</p>
+          <p>TANZANIA</p>
+        </div>
+    
+        <!-- Column 3: Quick Links -->
+        <div class="footer-column">
+          <h3>QUICK LINKS</h3>
+          <ul>
+            <li><a href="#">Kilimanjaro Magic Site Hotel - Moshi</a></li>
+            <li><a href="#">Kilimanjaro Magic Site Homes - Moshi</a></li>
+            <li><a href="#">Kilimanjaro Magic Site Homes - Arusha</a></li>
+          </ul>
+        </div>
+    
+        <!-- Column 4: Subscribe -->
+        <div class="footer-column">
+          <h3>SUBSCRIBE</h3>
+          <form class="subscribe-form">
+            <input type="text" name="name" placeholder="Name" required />
+            <input type="email" name="email" placeholder="Email" required />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Footer Copyright -->
+    <div class="footer-copyright">
+      <p>© 2025 Kilimanjaro Magic Site Hotels @All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp Chat Button -->
+  <div class="whatsapp-chat">
+    <span>Need Help? Chat with us</span>
+    <a href="https://wa.me/255780850748" target="_blank">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+  </div>
+
+  {% block extra_scripts %}
+  <script src="{% static 'js/main.js' %}"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Select elements
+      const hamburger = document.querySelector(".hamburger");
+      const nav = document.querySelector(".main-nav");
+      const closeBtn = document.querySelector(".close-btn");
+  
+      if (!hamburger || !nav || !closeBtn) {
+          console.error("Navigation elements not found!");
+          return;
+      }
+  
+      // Toggle menu when clicking the hamburger
+      hamburger.addEventListener("click", function (event) {
+          event.stopPropagation(); // Prevents event bubbling issues
+          nav.classList.toggle("open");
+      });
+  
+      // Close menu when clicking the "X" button
+      closeBtn.addEventListener("click", function () {
+          nav.classList.remove("open");
+      });
+  
+      // Close menu when clicking outside
+      document.addEventListener("click", function (event) {
+          if (!nav.contains(event.target) && !hamburger.contains(event.target)) {
+              nav.classList.remove("open");
+          }
+      });
+  
+      console.log("Hamburger menu script loaded on", window.location.pathname);
+  });
+  
+  </script>
+  {% endblock extra_scripts %}
+</body>
+</html>

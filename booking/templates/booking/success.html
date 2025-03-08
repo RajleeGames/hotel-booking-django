@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Booking Success</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <h2>Booking Confirmed!</h2>
+    <p>Thank you for your booking. We have received your booking details.</p>
+    <a href="{% url 'book_room' %}" class="btn btn-primary">Make Another Booking</a>
+  </div>
+</body>
+</html>

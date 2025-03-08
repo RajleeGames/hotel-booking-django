@@ -1,0 +1,75 @@
+{% extends "booking/base.html" %}
+{% load static %}
+
+{% block title %}Upcoming Events - Kilimanjaro Magic Site Hotel{% endblock %}
+
+{% block hero_image %}{% static 'images/upcoming.jpg' %}{% endblock %}
+{% block hero_content %}
+<h1>Upcoming Events</h1>
+<p>
+  Stay updated with our latest events, promotions, and special offers...
+</p>
+{% endblock %}
+
+{% block content %}
+<section class="upcoming-events">
+  <div class="events-list">
+    <article>
+      <h2>Live Music Night</h2>
+      <div class="event-video">
+        <video controls>
+          <source src="{% static 'videos/live_music.mp4' %}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <p><strong>Date:</strong> 12th March 2025</p>
+      <p>
+        Join us for an evening of live music and entertainment...
+      </p>
+    </article>
+
+    <article>
+      <h2>Food &amp; Wine Festival</h2>
+      <div class="event-video">
+        <video controls>
+          <source src="{% static 'videos/food_wine_festival.mp4' %}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <p><strong>Date:</strong> 25th March 2025</p>
+      <p>
+        Experience the finest local and international cuisine...
+      </p>
+    </article>
+    <!-- More event articles as needed -->
+  </div>
+  
+  <!-- EXPERIENCE MORE Button -->
+  <div class="more-experience">
+    <a href="{% static 'pdfs/experience_more.pdf' %}" class="exp-more-button" target="_blank">
+ 
+
+      EXPERIENCE MORE
+    </a>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  // Fade-in animation for event articles (if not already included elsewhere)
+  document.addEventListener('DOMContentLoaded', function() {
+    const fadeElements = document.querySelectorAll('.events-list article, .more-experience');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in-active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    fadeElements.forEach(el => observer.observe(el));
+  });
+</script>
+{% endblock %}

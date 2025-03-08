@@ -1,0 +1,140 @@
+{% extends "booking/base.html" %}
+{% load static %}
+
+{% block title %}Home - Kilimanjaro Magic Site Hotel{% endblock %}
+
+{% block hero_image %}{% static 'images/home_background.jpg' %}{% endblock %}
+
+{% block hero_content %}
+<h1>WELCOME TO KILIMANJARO MAGIC SITE HOTEL MOSHI</h1>
+<p>Experience Luxury &amp; Comfort in the Heart of Kilimanjaro</p>
+{% endblock %}
+
+{% block content %}
+<style>
+  /* Add your custom CSS here – for brevity, only key styles are shown */
+  .contact-banner { position: relative; margin-top: 40px; background-image: url("{% static 'images/contact-banner.jpg' %}"); background-repeat: no-repeat; background-position: center center; background-size: cover; height: 400px; display: flex; align-items: center; justify-content: center; }
+  .contact-banner .overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); }
+  .contact-banner .content { position: relative; color: #fff; text-align: center; z-index: 1; }
+  .contact-banner .content h2 { font-size: 2.5rem; margin-bottom: 30px; }
+  .contact-banner .content a { background: #8b0000; color: #fff; padding: 15px 30px; border-radius: 5px; text-decoration: none; font-size: 1.5rem; transition: background 0.3s ease; }
+  .contact-banner .content a:hover { background: white; color: darkred; border: 2px solid darkred; }
+</style>
+
+<!-- OUR HOTEL SECTION -->
+<section class="our-hotel">
+  <div class="section-heading">
+    <h2>OUR HOTEL</h2>
+    <div class="title-line">
+      <span class="diamond"></span>
+    </div>
+  </div>
+  <p>
+    Named after the highest peak of Africa’s highest mountain – Mt Kilimanjaro, Kibo Palace Hotel is one of Arusha’s most exciting and innovative luxury hotels. Contemporary, conductive, and unconventional, a luxury hotel with a new attitude.
+  </p>
+  
+  <div class="features">
+    <div class="feature-card">
+      <img src="{% static 'images/gym1.jpg' %}" alt="Accomodation">
+      <div class="feature-overlay">
+        <h3>Accomodation</h3>
+        <a href="{% url 'accommodation' %}">Learn More</a>
+      </div>
+    </div>
+    <div class="feature-card">
+      <img src="{% static 'images/1b.jpg' %}" alt="Restaurant & Bars">
+      <div class="feature-overlay">
+        <h3>Restaurant & Bars</h3>
+        <a href="{% url 'dine_wine' %}">Learn More</a>
+      </div>
+    </div>
+    <div class="feature-card">
+      <img src="{% static 'images/dine2.jpg' %}" alt="Meeting & Conferences">
+      <div class="feature-overlay">
+        <h3>Meeting & Conferences</h3>
+        <a href="{% url 'events_conferences' %}">Learn More</a>
+      </div>
+    </div>
+    <div class="feature-card">
+      <img src="{% static 'images/dine3.jpg' %}" alt="Wellness Centre">
+      <div class="feature-overlay">
+        <h3>Wellness Centre</h3>
+        <a href="{% url 'wellness_centre' %}">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUE ADDED SERVICES SECTION -->
+<section class="value-added-services">
+  <div class="section-heading">
+    <h2>VALUE ADDED SERVICES</h2>
+    <div class="title-line">
+      <span class="diamond"></span>
+    </div>
+  </div>
+  <div class="service-columns">
+    <ul class="column">
+      <li>Business Center</li>
+      <li>Laundry & Dry-Cleaning Services</li>
+      <li>External Catering Service</li>
+      <li>Wireless internet services</li>
+    </ul>
+    <ul class="column">
+      <li>Airport Transfer</li>
+      <li>Organized Tour Packages</li>
+      <li>Event Management</li>
+      <li>Doctor on-call 24/7</li>
+    </ul>
+  </div>
+</section>
+
+<div class="diamond-line-container">
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+<!-- ROOMS SECTION -->
+<section id="rooms">
+  <div class="section-heading">
+    <h2>OUR ROOMS</h2>
+    <div class="title-line">
+      <span class="diamond"></span>
+    </div>
+  </div>
+  <div class="rooms">
+    {% for room in rooms %}
+      <div class="room">
+        <h3>{{ room.name }}</h3>
+        <p>Type: {{ room.get_room_type_display }}</p>
+        <p>Price per night: Tsh{{ room.price_per_night }}</p>
+        {% if room.image %}
+          <img src="{{ room.image.url }}" alt="{{ room.name }}">
+        {% endif %}
+        <a href="{% url 'book_room' room.id %}">Book Now</a>
+      </div>
+    {% empty %}
+      <p>No rooms available at the moment.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<div class="diamond-line-container">
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+<!-- CONTACT US BANNER -->
+<section class="contact-banner">
+  <div class="overlay"></div>
+  <div class="content">
+    <h2>CONTACT US</h2>
+    <a href="{% url 'contact' %}">FIND US</a>
+  </div>
+</section>
+
+<br>
+
+{% endblock %}

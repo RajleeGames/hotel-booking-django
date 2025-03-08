@@ -1,0 +1,160 @@
+{% extends "booking/base.html" %}
+{% load static %}
+
+{% block title %}Dine & Wine - Kilimanjaro Magic Site Hotel{% endblock %}
+
+{% block hero_image %}{% static 'images/dinewine.jpg' %}{% endblock %}
+
+{% block hero_content %}
+<h1>Dine & Wine</h1>
+<p>
+  Experience an exquisite culinary journey at Kilimanjaro Magic Site Hotel...
+</p>
+{% endblock %}
+
+{% block content %}
+
+<section class="dine-wine">
+  <h2>OUR RESTAURANTS & BARS</h2>
+
+  <div class="diamond-line-container">
+  <div class="title-line">
+    <span class="diamond"></span>
+  </div>
+</div>
+
+<!-- Menu Links (Drinks, Food, Sushi) -->
+<div class="menu-links">
+  <a href="{% static 'pdfs/drinks_menu.pdf' %}" target="_blank">DRINKS MENU</a>
+  <a href="{% static 'pdfs/food_menu.pdf' %}" target="_blank">FOOD MENU</a>
+  <a href="{% static 'pdfs/sushi_menu.pdf' %}" target="_blank">SUSHI MENU</a>
+</div>
+
+  <!-- Grid container for all restaurant sections -->
+  <div class="restaurant-grid">
+
+    <!-- Kilimanjaro Restaurant -->
+    <div class="restaurant-section">
+      <h3>KILIMANJARO RESTAURANT</h3>
+      <!-- Replace with your actual image -->
+      <img src="{% static 'images/conf2.jpg' %}" alt="Kilimanjaro Restaurant">
+      <div class="restaurant-content">
+        <p>
+          Overlooking the pool and beautiful lush green gardens, the Kilimanjaro Restaurant
+          offers succulent cuisine with intense flavors and satisfying textures created
+          using the freshest seasonal produce.
+        </p>
+        <p>
+          From an extensive menu of local and international favorites and with options
+          for fine à la carte and open buffet dining, The Kibo Palace Hotel promises
+          unsurpassed service for satisfaction. The warmth of a traditional African welcome
+          coupled with Kilimanjaro’s own inimitable style adds up to uniquely defined hospitality.
+        </p>
+        <p>
+          Designed to create a sense of intimacy while still enjoying a natural, outdoor
+          setting and complemented by a comprehensive wine list, coupled with the attentive
+          service of our staff, the Kilimanjaro Terrace Restaurant is the ideal place to
+          enjoy a great meal in relaxed surroundings.
+        </p>
+        <p><strong>—- Breakfast times —-</strong><br>
+          Monday – Friday 6:30 am – 10:00 am<br>
+          Saturday & Sunday 6:30 am – 11:00 am
+        </p>
+        <p><strong>—- Lunch, 12:30 p.m. – 3:00 p.m. —-</strong></p>
+        <p><strong>—- Dinner, 6:30 p.m. – 10:00 p.m. —-</strong></p>
+        <a href="{% url 'contact' %}" class="btn-reserve">RESERVE NOW</a>
+      </div>
+    </div>
+
+    <!-- The Lounge Bar -->
+    <div class="restaurant-section">
+      <h3>THE LOUNGE BAR</h3>
+      <img src="{% static 'images/dine1.jpg' %}" alt="The Lounge Bar">
+      <div class="restaurant-content">
+        <p>
+          Perfectly integrated into the elegant, classic atmosphere of the Kibo, The Lounge
+          Bar is a pleasant meeting place, ideal for an aperitif or an after-dinner drink.
+          The guests can relax and sip wines, champagnes and classic or creative cocktails
+          prepared by expert barmen while enjoying Jazz music and evergreens.
+        </p>
+        <p>
+          Tropical Garden for evening light meals, business, and pre-dinner drinks.
+          Indulge in an evening cocktail beside the pool ideal for discussion, musings
+          and carefree relaxation by the poolside bar as you chat with other guests,
+          share your African safari experiences and soak up the sun.
+        </p>
+        <p>
+          The atmosphere has turned The Tropical Garden into a meeting point for casual
+          gatherings, poolside relaxation, refreshments, drinks and light pre-dinner meals
+          and a significant part of the daily routine of our guests and the perfect way
+          to enjoy a day or night in Arusha.
+        </p>
+        <p>
+          Reward yourself with a discount and a refreshing cocktail with 50% off on
+          Wednesday and Friday between 6.00 and 8.00 p.m. Taste the motherland’s finest
+          offerings by the pool at the African Buffet Dinner every Friday. Treat your
+          family to live entertainment from talented locals with complimentary swimming
+          for guests having lunch every Sunday afternoon.
+        </p>
+        <p><strong>—- 10:00 a.m. – Midnight. —-</strong></p>
+        <a href="{% url 'contact' %}" class="btn-reserve">RESERVE NOW</a>
+      </div>
+    </div>
+
+    <!-- Pool Area Terrace -->
+    <div class="restaurant-section">
+      <h3>POOL AREA TERRACE</h3>
+      <img src="{% static 'images/dine2.jpg' %}" alt="Pool Area Terrace">
+      <div class="restaurant-content">
+        <p>
+          With access to the Tropical Bar, our pool, one of the best in Arusha, offers
+          healthy juices, cocktails, and light revitalizing snacks, a welcome relief
+          from the city’s buzz. As the night sets in, the pool morphs into an ambiance
+          of chic relaxation. The pool is open to the general public, offering a decadent
+          lounging experience.
+        </p>
+        <p>
+          Tropical Garden for evening light meals, business, and pre-dinner drinks.
+          Indulge in an evening cocktail beside the pool ideal for discussion, musings
+          and carefree relaxation by the poolside bar as you chat with other guests,
+          share your African safari experiences and soak up the sun.
+        </p>
+        <p>
+          Indulge in an evening cocktail beside the pool ideal for discussion, musings
+          and carefree relaxation by the poolside bar as you chat with other guests,
+          share your African safari experiences and soak up the sun.
+        </p>
+        <p><strong>—- 8:00 a.m. – 10:00 p.m. —-</strong></p>
+        <a href="{% url 'contact' %}" class="btn-reserve">RESERVE NOW</a>
+      </div>
+    </div>
+
+    <!-- In-Room Services -->
+    <div class="restaurant-section">
+      <h3>IN ROOM SERVICES</h3>
+      <img src="{% static 'images/dine3.jpg' %}" alt="In-Room Services">
+      <div class="restaurant-content">
+        <p>
+          Kick off your shoes. Slip on your robe. Call room service.
+        </p>
+        <p>
+          In-room dining at Kibo palace hotel is available 24 hours a day, bringing
+          the same high levels of service and culinary experiences found in the hotel’s
+          restaurants and bars to the privacy of a room or suite.
+        </p>
+        <p>
+          Be it breakfast, lunch, dinner or a cocktail party, the in-room dining team
+          works closely with the hotel’s chefs to create bespoke options beyond the
+          fully stocked Butler’s Pantry.
+        </p>
+        <p><strong>—- 24 Hours of Room Service —-</strong></p>
+        <a href="{% url 'contact' %}"class="btn-reserve">RESERVE NOW</a>
+      </div>
+    </div>
+
+  </div> <!-- End .restaurant-grid -->
+
+  <!-- Example image gallery (existing content) -->
+
+</section>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}Kilimanjaro Magic Site Hotel Admin{% endblock %}
+
+{% block branding %}
+<div id="branding">
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            <img src="{% static 'images/background.png' %}" alt="Kilimanjaro Magic Site Hotel Logo" style="max-height: 50px; margin-right: 10px;">
+            Kilimanjaro Magic Site Hotel Admin Site
+        </a>
+    </h1>
+</div>
+{% endblock %}

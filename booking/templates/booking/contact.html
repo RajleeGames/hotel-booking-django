@@ -1,0 +1,88 @@
+{% extends "booking/base.html" %}
+{% load static %}
+
+{% block title %}Contact - Kilimanjaro Magic Site Hotel{% endblock %}
+
+{% block hero_image %}{% static 'images/contact1.jpg' %}{% endblock %}
+
+{% block hero_content %}
+<h1>Contact Us</h1>
+<p>We'd love to hear from you!</p>
+{% endblock %}
+
+{% block content %}
+<div class="contact-container">
+  <!-- LEFT COLUMN: CONTACT FORM -->
+  <div class="contact-form-container fade-in-left">
+    <form method="post" action="#">
+      {% csrf_token %}
+      <h2>Drop Us a Line</h2>
+      
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required />
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+
+      <div class="form-group">
+        <label for="reservations">Reservations</label>
+        <select id="reservations" name="reservations">
+          <option value="">-- Select an Option --</option>
+          <option value="KILIMANJARO RESTAURANT">KILIMANJARO RESTAURANT</option>
+          <option value="THE LOUNGE BAR">THE LOUNGE BAR</option>
+          <option value="POOL AREA/TERRACE">POOL AREA/TERRACE</option>
+          <option value="IN-ROOM SERVICES">IN-ROOM SERVICES</option>
+          <option value="SPECIAL EVENTS (PLEASE INDICATE THE TYPE OF EVENT IN MESSAGE)">SPECIAL EVENTS (PLEASE INDICATE THE TYPE OF EVENT IN MESSAGE)</option>
+          <option value="EXTERNAL CATERING">EXTERNAL CATERING</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5"></textarea>
+      </div>
+
+      <button type="submit" class="send-button">SEND</button>
+    </form>
+  </div>
+
+ <!-- RIGHT COLUMN: GOOGLE MAP -->
+<div class="map-container fade-in-right">
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.968767750089!2d37.33632061089201!3d-3.357796125094416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1839d9f0a737c2ad%3A0x9f47c72427bf8d06!2sKilimanjaro%20Magic%20Site%20Hotel!5e0!3m2!1sen!2stz!4v1740307285484!5m2!1sen!2stz"
+    style="border:0;" 
+    allowfullscreen="" 
+    loading="lazy" 
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  // Simple IntersectionObserver to trigger fade-in animations
+  document.addEventListener('DOMContentLoaded', function() {
+    const fadeElements = document.querySelectorAll('.fade-in-left, .fade-in-right');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in-active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    fadeElements.forEach(el => observer.observe(el));
+  });
+</script>
+{% endblock %}
