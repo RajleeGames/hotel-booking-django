@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-k%(%^+4xbu$=4pr9_x1$(zcmnkwz=_+al77_p(ns8*_o)io7(z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [  '95b4-41-78-169-246.ngrok-free.app','127.0.0.1',]
+ALLOWED_HOSTS = [  '6b88-41-78-169-246.ngrok-free.app','127.0.0.1',]
 
 
 # Application definition
@@ -139,5 +139,5 @@ EMAIL_USE_OAUTH2 = True
 EMAIL_OAUTH2_TOKEN_PATH = "token.pickle"
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://95b4-41-78-169-246.ngrok-free.app',
+    'https://6b88-41-78-169-246.ngrok-free.app',
 ]

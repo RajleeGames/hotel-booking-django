@@ -3,6 +3,44 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+  /* ================================
+     Responsive Slider Styles
+  ================================= */
+  .slider-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin: 20px 0;
+  }
+  
+  .slider {
+    display: flex;
+    transition: transform 0.3s ease;
+    width: 100%;
+  }
+  
+  .slide {
+    flex: 0 0 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .slide img {
+    width: 100% !important;
+    height: auto;
+    display: block;
+  }
+  
+  /* Optional: Adjust arrow button sizes on mobile */
+  @media (max-width: 768px) {
+    .prev-arrow,
+    .next-arrow {
+      font-size: 1.5rem;
+      padding: 5px 10px;
+    }
+  }
+</style>
 {% endblock %}
 
 {% block title %}Accommodation - Kilimanjaro Magic Site Hotel{% endblock %}
@@ -10,7 +48,7 @@
 {% block hero_image %}{% static 'images/accommodation2.jpg' %}{% endblock %}
 
 {% block hero_content %}
-<h1>Accommodation</h1>
+<h1>Acomodation</h1>
 <p>
   Discover our wide range of rooms and suites. Each is designed to provide the utmost comfort and style.
 </p>
@@ -33,7 +71,7 @@
     <p><strong>ROOMS:</strong> 27</p>
     <p>
       Upgrade your stay with a booking at this modern suite with African flair, 
-      overlooking the sheltered slopes of the Kilimanjaro. Located in the main hotel building, 
+      overlooking the sheltered slopes of Kilimanjaro. Located in the main hotel building, 
       this tranquil accommodation exemplifies refined decor.
     </p>
     <ul class="amenities">
@@ -287,7 +325,6 @@
   </div>
 </section>
 
-
 <div class="diamond-line-container">
   <div class="title-line">
     <span class="diamond"></span>
@@ -403,13 +440,12 @@
     <span class="diamond"></span>
   </div>
 </div>
-
 {% endblock %}
 
 {% block extra_scripts %}
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // 1) Optional IntersectionObserver for fade-in
+    // Optional IntersectionObserver for fade-in effects on room sections
     const sections = document.querySelectorAll('.room-section');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -423,7 +459,7 @@
       observer.observe(section);
     });
 
-    // 2) Simple slider logic for each .slider-container
+    // Simple slider logic for each .slider-container
     const sliderContainers = document.querySelectorAll('.slider-container');
     sliderContainers.forEach(container => {
       const slider = container.querySelector('.slider');
@@ -434,28 +470,25 @@
       let currentIndex = 0;
       const totalSlides = slides.length;
 
-      // Move slides to show the current index
       function updateSlidePosition() {
         slider.style.transform = `translateX(-${currentIndex * 100}%)`;
       }
 
-      // Click: Previous
       prevBtn.addEventListener('click', () => {
         currentIndex = (currentIndex === 0) ? totalSlides - 1 : currentIndex - 1;
         updateSlidePosition();
       });
 
-      // Click: Next
       nextBtn.addEventListener('click', () => {
         currentIndex = (currentIndex + 1) % totalSlides;
         updateSlidePosition();
       });
 
-      // 3) Automatic sliding every 4 seconds
+      // Automatic sliding every 4 seconds
       setInterval(() => {
         currentIndex = (currentIndex + 1) % totalSlides;
         updateSlidePosition();
-      }, 4000); // 4000ms = 4 seconds
+      }, 4000);
     });
   });
 </script>

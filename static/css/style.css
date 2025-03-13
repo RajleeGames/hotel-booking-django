@@ -11,11 +11,30 @@
 
 /* Body and Layout */
 body {
-    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif; /* Use Open Sans for body text */
     background-color: #f4f4f4;
     color: #333;
-}
-
+  }
+  
+  /* Headings use Playfair Display */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif; /* Use Playfair Display for headings */
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Example for a hero heading (if you want it extra large) */
+  .hero-heading {
+    font-size: 3rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  
+  /* ...any other site-wide CSS rules... */
+  
 /* ========================================
    HEADER / NAVIGATION
 ======================================== */
@@ -227,23 +246,29 @@ body {
     margin: 0;
 }
 
-.title-line {
-    width: 159px;
-    height: 3px;
-    background: #8b0000;
-    margin: 10px auto;
+ /* =========================================
+     DIAMOND LINE CONTAINER
+  ========================================= */
+  .diamond-line-container {
+    margin: 40px 0;
+  }
+  .title-line {
     position: relative;
-}
-
-.title-line .diamond {
-    width: 12px;
-    height: 12px;
-    background: #8b0000;
-    transform: rotate(45deg);
+    height: 2px;
+    background: #ccc;
+    margin: 20px auto;
+    max-width: 200px;
+  }
+  .title-line .diamond {
     position: absolute;
-    top: -5px;
-    left: calc(50% - 6px);
-}
+    top: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 15px;
+    height: 15px;
+    background: #f8b400;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  }
 
 /* OUR HOTEL SECTION */
 .our-hotel {
@@ -759,37 +784,45 @@ form button:hover {
 }
 
 /* ========================================
-   WHATSAPP FLOATING BOX
+   FANCY WHATSAPP FLOATING BOX
 ======================================== */
 .whatsapp-chat {
     position: fixed;
+    bottom: 80px; /* Raised higher from the bottom */
     right: 20px;
-    bottom: 50%;
-    transform: translateY(50%);
-    background-color: transparent;
-    color: black;
-    font-size: 16px;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    border-radius: 50px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    padding: 12px 20px;
     display: flex;
     align-items: center;
-    padding: 10px;
+    color: white;
+    font-size: 16px;
     z-index: 1000;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.whatsapp-chat:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
 }
 
 .whatsapp-chat span {
-    margin-right: 10px;
+    margin-right: 12px;
     font-size: 16px;
+    font-weight: 600;
 }
 
 .whatsapp-chat a {
     display: flex;
     align-items: center;
     text-decoration: none;
+    color: white;
 }
 
 .whatsapp-chat i {
-    font-size: 40px;
-    color: #25D366;
-    transition: transform 0.3s ease-in-out;
+    font-size: 32px;
+    transition: transform 0.3s ease;
 }
 
 .whatsapp-chat a:hover i {

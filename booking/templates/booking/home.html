@@ -6,19 +6,307 @@
 {% block hero_image %}{% static 'images/home_background.jpg' %}{% endblock %}
 
 {% block hero_content %}
-<h1>WELCOME TO KILIMANJARO MAGIC SITE HOTEL MOSHI</h1>
+<h1>WELCOME TO <br> KILIMANJARO MAGIC SITE HOTEL MOSHI</h1>
 <p>Experience Luxury &amp; Comfort in the Heart of Kilimanjaro</p>
 {% endblock %}
 
 {% block content %}
 <style>
-  /* Add your custom CSS here – for brevity, only key styles are shown */
-  .contact-banner { position: relative; margin-top: 40px; background-image: url("{% static 'images/contact-banner.jpg' %}"); background-repeat: no-repeat; background-position: center center; background-size: cover; height: 400px; display: flex; align-items: center; justify-content: center; }
-  .contact-banner .overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); }
-  .contact-banner .content { position: relative; color: #fff; text-align: center; z-index: 1; }
-  .contact-banner .content h2 { font-size: 2.5rem; margin-bottom: 30px; }
-  .contact-banner .content a { background: #8b0000; color: #fff; padding: 15px 30px; border-radius: 5px; text-decoration: none; font-size: 1.5rem; transition: background 0.3s ease; }
-  .contact-banner .content a:hover { background: white; color: darkred; border: 2px solid darkred; }
+  /* =========================================
+     CONTACT BANNER (Already existing)
+  ========================================= */
+  .contact-banner { 
+    position: relative; 
+    margin-top: 40px; 
+    background-image: url("{% static 'images/contact-banner.jpg' %}"); 
+    background-repeat: no-repeat; 
+    background-position: center center; 
+    background-size: cover; 
+    height: 400px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+  }
+  .contact-banner .overlay { 
+    position: absolute; 
+    top: 0; left: 0; right: 0; bottom: 0; 
+    background: rgba(0, 0, 0, 0.5); 
+  }
+  .contact-banner .content { 
+    position: relative; 
+    color: #fff; 
+    text-align: center; 
+    z-index: 1; 
+  }
+  .contact-banner .content h2 { 
+    font-size: 2.5rem; 
+    margin-bottom: 30px; 
+  }
+  .contact-banner .content a { 
+    background: #8b0000; 
+    color: #fff; 
+    padding: 15px 30px; 
+    border-radius: 5px; 
+    text-decoration: none; 
+    font-size: 1.5rem; 
+    transition: background 0.3s ease; 
+  }
+  .contact-banner .content a:hover { 
+    background: white; 
+    color: darkred; 
+    border: 2px solid darkred; 
+  }
+
+  /* =========================================
+     OUR HOTEL SECTION
+  ========================================= */
+  .our-hotel {
+    padding: 60px 20px;
+    text-align: center;
+  }
+  .our-hotel .section-heading h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  .our-hotel p {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    font-size: 1.1rem;
+    color: #555;
+  }
+  .our-hotel .features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  .feature-card {
+    position: relative;
+    overflow: hidden;
+    flex: 1 1 220px;
+    max-width: 300px;
+    border-radius: 10px;
+  }
+  .feature-card img {
+    width: 100%;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+  .feature-card:hover img {
+    transform: scale(1.05);
+  }
+  .feature-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    transition: background 0.3s ease;
+  }
+  .feature-overlay h3 {
+    margin: 0 0 5px;
+  }
+  .feature-overlay a {
+    background: #f8b400;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  }
+  .feature-overlay a:hover {
+    background: #e09e00;
+  }
+
+  /* =========================================
+     VALUE ADDED SERVICES SECTION
+  ========================================= */
+  .value-added-services {
+    padding: 60px 20px;
+    text-align: center;
+    background: #f5f5f5;
+  }
+  .value-added-services .section-heading h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  .service-columns {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+  }
+  .service-columns .column {
+    list-style: none;
+    font-size: 1.2rem;
+    color: #333;
+  }
+  .service-columns .column li {
+    margin-bottom: 10px;
+  }
+
+  /* =========================================
+     TESTIMONIALS SECTION (New)
+  ========================================= */
+  .testimonials {
+    padding: 60px 20px;
+    background: #fff;
+    text-align: center;
+  }
+  .testimonials .section-heading h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  .testimonials .testimonials-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+  }
+  .testimonial-card {
+    background: #f9f9f9;
+    padding: 25px;
+    max-width: 320px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  }
+  .testimonial-card p {
+    font-style: italic;
+    color: #555;
+    line-height: 1.6;
+  }
+  .testimonial-card .author {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  /* =========================================
+     ROOMS SECTION
+  ========================================= */
+  #rooms {
+    padding: 60px 20px;
+    text-align: center;
+  }
+  #rooms .rooms {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  #rooms .room {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    max-width: 300px;
+    text-align: left;
+    transition: box-shadow 0.3s ease;
+  }
+  #rooms .room:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  #rooms .room h3 {
+    margin-top: 0;
+  }
+  #rooms .room img {
+    width: 100%;
+    border-radius: 5px;
+    margin: 10px 0;
+  }
+  #rooms .room a {
+    display: inline-block;
+    background: #f8b400;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+  #rooms .room a:hover {
+    background: #e09e00;
+  }
+
+  /* =========================================
+     DIAMOND LINE CONTAINER
+  ========================================= */
+  .diamond-line-container {
+    margin: 40px 0;
+  }
+  .title-line {
+    position: relative;
+    height: 2px;
+    background: #ccc;
+    margin: 20px auto;
+    max-width: 200px;
+  }
+  .title-line .diamond {
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 15px;
+    height: 15px;
+    background: #f8b400;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  }
+
+  /* =========================================
+     CONTACT US BANNER
+  ========================================= */
+  .contact-banner {
+    margin-top: 40px;
+    background-image: url("{% static 'images/contact-banner.jpg' %}");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .contact-banner .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .contact-banner .content {
+    position: relative;
+    color: #fff;
+    text-align: center;
+    z-index: 1;
+  }
+  .contact-banner .content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+  }
+  .contact-banner .content a {
+    background: #8b0000;
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition: background 0.3s ease;
+  }
+  .contact-banner .content a:hover {
+    background: white;
+    color: darkred;
+    border: 2px solid darkred;
+  }
 </style>
 
 <!-- OUR HOTEL SECTION -->
@@ -86,6 +374,30 @@
       <li>Event Management</li>
       <li>Doctor on-call 24/7</li>
     </ul>
+  </div>
+</section>
+
+<!-- TESTIMONIALS SECTION -->
+<section class="testimonials">
+  <div class="section-heading">
+    <h2>WHAT OUR GUESTS SAY</h2>
+    <div class="title-line">
+      <span class="diamond"></span>
+    </div>
+  </div>
+  <div class="testimonials-container">
+    <div class="testimonial-card">
+      <p>"The service here is exceptional and the atmosphere is simply magical. I felt like royalty during my stay!"</p>
+      <div class="author">– Jane Doe</div>
+    </div>
+    <div class="testimonial-card">
+      <p>"Every detail was perfectly arranged. The luxury and comfort at Kilimanjaro Magic Site Hotel is unmatched."</p>
+      <div class="author">– John Smith</div>
+    </div>
+    <div class="testimonial-card">
+      <p>"A memorable experience! From the elegant rooms to the exquisite dining, everything exceeded my expectations."</p>
+      <div class="author">– Mary Johnson</div>
+    </div>
   </div>
 </section>
 

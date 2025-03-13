@@ -56,7 +56,6 @@
   </div>
 </section>
 
-
 <div class="diamond-line-container">
   <div class="title-line">
     <span class="diamond"></span>
@@ -214,53 +213,6 @@
 {% endblock %}
 
 {% block extra_scripts %}
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // IntersectionObserver for fade-in effects
-    const sections = document.querySelectorAll('.event-section');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('fade-in-up');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    sections.forEach(section => {
-      observer.observe(section);
-    });
-
-    // Slider logic for each slider container
-    const sliderContainers = document.querySelectorAll('.slider-container');
-    sliderContainers.forEach(container => {
-      const slider = container.querySelector('.slider');
-      const slides = container.querySelectorAll('.slide');
-      const prevBtn = container.querySelector('.prev-arrow');
-      const nextBtn = container.querySelector('.next-arrow');
-
-      let currentIndex = 0;
-      const totalSlides = slides.length;
-
-      function updateSlidePosition() {
-        slider.style.transform = `translateX(-${currentIndex * 100}%)`;
-      }
-
-      prevBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex === 0) ? totalSlides - 1 : currentIndex - 1;
-        updateSlidePosition();
-      });
-
-      nextBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % totalSlides;
-        updateSlidePosition();
-      });
-
-      // Automatic sliding every 4 seconds
-      setInterval(() => {
-        currentIndex = (currentIndex + 1) % totalSlides;
-        updateSlidePosition();
-      }, 4000);
-    });
-  });
-</script>
+<!-- No additional inline slider or fade-in code is needed;
+     main.js (loaded via base.html) handles all interactions -->
 {% endblock %}
