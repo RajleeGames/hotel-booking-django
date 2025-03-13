@@ -13,48 +13,48 @@
 {% block content %}
 <style>
   /* =========================================
-     CONTACT BANNER (Already existing)
+     CONTACT BANNER
   ========================================= */
-  .contact-banner { 
-    position: relative; 
-    margin-top: 40px; 
-    background-image: url("{% static 'images/contact-banner.jpg' %}"); 
-    background-repeat: no-repeat; 
-    background-position: center center; 
-    background-size: cover; 
-    height: 400px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
+  .contact-banner {
+    position: relative;
+    margin-top: 40px;
+    background-image: url("{% static 'images/contact-banner.jpg' %}");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .contact-banner .overlay { 
-    position: absolute; 
-    top: 0; left: 0; right: 0; bottom: 0; 
-    background: rgba(0, 0, 0, 0.5); 
+  .contact-banner .overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
   }
-  .contact-banner .content { 
-    position: relative; 
-    color: #fff; 
-    text-align: center; 
-    z-index: 1; 
+  .contact-banner .content {
+    position: relative;
+    color: #fff;
+    text-align: center;
+    z-index: 1;
   }
-  .contact-banner .content h2 { 
-    font-size: 2.5rem; 
-    margin-bottom: 30px; 
+  .contact-banner .content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
   }
-  .contact-banner .content a { 
-    background: #8b0000; 
-    color: #fff; 
-    padding: 15px 30px; 
-    border-radius: 5px; 
-    text-decoration: none; 
-    font-size: 1.5rem; 
-    transition: background 0.3s ease; 
+  .contact-banner .content a {
+    background: #8b0000;
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition: background 0.3s ease;
   }
-  .contact-banner .content a:hover { 
-    background: white; 
-    color: darkred; 
-    border: 2px solid darkred; 
+  .contact-banner .content a:hover {
+    background: white;
+    color: darkred;
+    border: 2px solid darkred;
   }
 
   /* =========================================
@@ -97,9 +97,7 @@
   }
   .feature-overlay {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: 0; left: 0; right: 0;
     background: rgba(0,0,0,0.6);
     color: #fff;
     padding: 10px;
@@ -149,7 +147,7 @@
   }
 
   /* =========================================
-     TESTIMONIALS SECTION (New)
+     TESTIMONIALS SECTION
   ========================================= */
   .testimonials {
     padding: 60px 20px;
@@ -184,10 +182,51 @@
     color: #555;
     line-height: 1.6;
   }
-  .testimonial-card .author {
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 15px;
+  }
+  .testimonial-author-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+  }
+  .testimonial-author .author {
     font-weight: bold;
     color: #333;
+  }
+
+  /* =========================================
+     PARTNERS SECTION
+  ========================================= */
+  .partners {
+    padding: 60px 20px;
+    text-align: center;
+    background: #fff;
+  }
+  .partners .section-heading h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  .partners .partners-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    align-items: center;
+  }
+  .partners .partners-container a img {
+    max-height: 80px;
+    width: auto;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+  }
+  .partners .partners-container a img:hover {
+    opacity: 1;
   }
 
   /* =========================================
@@ -277,10 +316,7 @@
   }
   .contact-banner .overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0, 0, 0, 0.5);
   }
   .contact-banner .content {
@@ -307,7 +343,168 @@
     color: darkred;
     border: 2px solid darkred;
   }
+
+  /* =========================================
+     CEO MODAL BUTTON & ANIMATION
+  ========================================= */
+  /* Floating button on the left */
+  .ceo-button {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    background: #f8b400;
+    color: #fff;
+    padding: 12px 18px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    z-index: 9999;
+    transition: background 0.3s ease;
+  }
+  .ceo-button:hover {
+    background: #e09e00;
+  }
+
+  /* Modal overlay */
+  .ceo-modal {
+    display: none;            
+    position: fixed;
+    z-index: 9998;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  /* When we add .show, display the modal with fade in */
+  .ceo-modal.show {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Modal content pinned to left side */
+  .ceo-modal-content {
+    position: relative;
+    background: #fff;
+    margin: 10% 0 0 60px; /* left offset so it’s near the button */
+    padding: 20px;
+    max-width: 350px;
+    border-radius: 10px;
+    animation: slideInLeft 0.5s forwards ease;
+  }
+  @keyframes slideInLeft {
+    from {
+      transform: translateX(-60px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  /* Layout for image + text in one row */
+  .ceo-modal-body {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .ceo-modal-body img {
+    width: 80px;   /* smaller image */
+    height: auto;
+    border-radius: 8px;
+  }
+  .ceo-modal-body .ceo-text {
+    flex: 1;  /* let text fill the remaining space */
+  }
+  .ceo-modal-body .ceo-text h2 {
+    color: #8B0000;
+    margin: 0 0 5px;
+    font-size: 1.2rem;
+  }
+  .ceo-modal-body .ceo-text p {
+    color: #333;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  /* Close button (X) */
+  .ceo-modal-content .close {
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s ease;
+  }
+  .ceo-modal-content .close:hover {
+    color: #f00;
+  }
+
+  /* =========================================
+     MOBILE VIEW ADJUSTMENTS
+  ========================================= */
+  @media (max-width: 768px) {
+    /* Increase top margin so it's lower on the screen */
+    .ceo-modal-content {
+      margin: 20% 0 0 40px;
+      max-width: 300px;
+    }
+    .ceo-modal-body img {
+      width: 60px; /* smaller image for mobile */
+    }
+  }
 </style>
+
+<!-- "Meet the CEO" Button -->
+<div class="ceo-button" onclick="openCeoModal()">
+  Meet the CEO
+</div>
+
+<!-- CEO Modal -->
+<div id="ceoModal" class="ceo-modal">
+  <div class="ceo-modal-content">
+    <!-- Close Button -->
+    <span class="close" onclick="closeCeoModal()">&times;</span>
+    
+    <!-- CEO Body: image on left, text on right -->
+    <div class="ceo-modal-body">
+      <!-- Update this image path as needed -->
+      <img src="{% static 'images/ceo1.jpg' %}" alt="CEO Image">
+      <div class="ceo-text">
+        <h2>Miraji Ally, CEO</h2>
+        <p>
+          Welcome to Kilimanjaro Magic Site Hotel! 
+          <br>We strive to make your stay unforgettable.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript to open/close modal -->
+<script>
+function openCeoModal() {
+  document.getElementById('ceoModal').classList.add('show');
+}
+
+function closeCeoModal() {
+  document.getElementById('ceoModal').classList.remove('show');
+}
+
+// Close modal by clicking outside the panel
+document.getElementById('ceoModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closeCeoModal();
+  }
+});
+</script>
 
 <!-- OUR HOTEL SECTION -->
 <section class="our-hotel">
@@ -388,16 +585,61 @@
   <div class="testimonials-container">
     <div class="testimonial-card">
       <p>"The service here is exceptional and the atmosphere is simply magical. I felt like royalty during my stay!"</p>
-      <div class="author">– Jane Doe</div>
+      <div class="testimonial-author">
+        <img 
+          src="{% static 'images/testimonials/jane.jpg' %}"
+          alt="Jane Doe" 
+          class="testimonial-author-img">
+        <span class="author">– Jane Doe</span>
+      </div>
     </div>
     <div class="testimonial-card">
       <p>"Every detail was perfectly arranged. The luxury and comfort at Kilimanjaro Magic Site Hotel is unmatched."</p>
-      <div class="author">– John Smith</div>
+      <div class="testimonial-author">
+        <img 
+          src="{% static 'images/testimonials/john.jpg' %}"
+          alt="John Smith" 
+          class="testimonial-author-img">
+        <span class="author">– John Smith</span>
+      </div>
     </div>
     <div class="testimonial-card">
       <p>"A memorable experience! From the elegant rooms to the exquisite dining, everything exceeded my expectations."</p>
-      <div class="author">– Mary Johnson</div>
+      <div class="testimonial-author">
+        <img 
+          src="{% static 'images/testimonials/mary.jpg' %}"
+          alt="Mary Johnson" 
+          class="testimonial-author-img">
+        <span class="author">– Mary Johnson</span>
+      </div>
     </div>
+  </div>
+</section>
+
+<!-- PARTNERS SECTION -->
+<section class="partners">
+  <div class="section-heading">
+    <h2>OUR PARTNERS</h2>
+    <div class="title-line">
+      <span class="diamond"></span>
+    </div>
+  </div>
+  <div class="partners-container">
+    <a href="https://www.booking.com" target="_blank">
+      <img src="{% static 'images/partners/booking1.png' %}" alt="Booking.com">
+    </a>
+    <a href="https://www.tripadvisor.com" target="_blank">
+      <img src="{% static 'images/partners/booking2.png' %}" alt="TripAdvisor">
+    </a>
+    <a href="https://www.expedia.com" target="_blank">
+      <img src="{% static 'images/partners/booking3.png' %}" alt="Expedia">
+    </a>
+    <a href="https://www.hotels.com" target="_blank">
+      <img src="{% static 'images/partners/booking5.png' %}" alt="Hotels.com">
+    </a>
+    <a href="https://kibopalacehotel.com" target="_blank">
+      <img src="{% static 'images/partners/booking6.png' %}" alt="Kibo Palace Hotel">
+    </a>
   </div>
 </section>
 
