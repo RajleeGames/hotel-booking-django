@@ -1,16 +1,47 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Room, Booking
-from .email_utils import send_gmail_oauth2  # Ensure this exists in your project
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from decimal import Decimal
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+# --- EMAIL SENDING FUNCTION USING GMAIL SMTP (HTML Email) ---
+def send_gmail_oauth2(to_email, subject, plain_text_body, html_body):
+    # Your Gmail credentials
+    from_email = "hajraally499@gmail.com"
+    app_password = "ngwu qlow quwl vlpr"
+    
+    # Create a multipart/alternative message
+    msg = MIMEMultipart("alternative")
+    # Use your hotel's name in the From header
+    msg['From'] = "Kilimanjaro Magic Site Hotel <hajraally499@gmail.com>"
+    msg['To'] = to_email
+    msg['Subject'] = subject
+    
+    # Attach plain text and HTML parts
+    part1 = MIMEText(plain_text_body, 'plain')
+    part2 = MIMEText(html_body, 'html')
+    msg.attach(part1)
+    msg.attach(part2)
+    
+    try:
+        # Connect to Gmail's SMTP server using SSL
+        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        server.login(from_email, app_password)
+        server.sendmail(from_email, to_email, msg.as_string())
+        server.quit()
+        print("Email sent successfully!")
+    except Exception as e:
+        print(f"Error sending email: {e}")
+
+# --- VIEWS ---
 
 def home(request):
     rooms = Room.objects.all()
     return render(request, 'booking/home.html', {'rooms': rooms})
-
-
 
 def book_room(request, room_id):
     room = get_object_or_404(Room, id=room_id)
@@ -34,10 +65,10 @@ def book_room(request, room_id):
             total_cost = Decimal(0)
 
         card_last4 = card_number[-4:] if card_number and len(card_number) >= 4 else ''
-
         print(f"Booking details: {guest_name}, {guest_email}, {checkin}, {checkout}, {total_cost}")
 
         try:
+            # Create booking instance
             booking = Booking.objects.create(
                 check_in=checkin,
                 check_out=checkout,
@@ -51,6 +82,53 @@ def book_room(request, room_id):
                 total_cost=total_cost,
             )
             messages.success(request, "Booking Confirmed!")
+
+            # Prepare the email details
+            subject = "Booking Confirmation - Kilimanjaro Magic Site Hotel"
+            
+            plain_text_body = f"""Dear {guest_name},
+
+Thank you for booking with us at Kilimanjaro Magic Site Hotel. Here are your booking details:
+
+Check-in Date: {checkin}
+Check-out Date: {checkout}
+Room Selected: {room}
+Additional Services: {additional_services if additional_services else 'None'}
+Total Cost: {total_cost}
+
+We look forward to hosting you.
+
+Best regards,
+Kilimanjaro Magic Site Hotel
+"""
+
+            # Update the logo URL below with your actual domain if needed
+            logo_url = "https://yourdomain.com/static/images/background.png"
+            html_body = f"""
+<html>
+  <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+    <div style="text-align: center; margin-bottom: 20px;">
+      <img src="{logo_url}" alt="Kilimanjaro Magic Site Hotel Logo" style="max-width:200px;">
+    </div>
+    <h2 style="color:#007bff; text-align: center;">Booking Confirmation</h2>
+    <p>Dear {guest_name},</p>
+    <p>Thank you for booking with us at <strong>Kilimanjaro Magic Site Hotel</strong>. Here are your booking details:</p>
+    <ul>
+      <li><strong>Check-in Date:</strong> {checkin}</li>
+      <li><strong>Check-out Date:</strong> {checkout}</li>
+      <li><strong>Room Selected:</strong> {room}</li>
+      <li><strong>Additional Services:</strong> {additional_services if additional_services else 'None'}</li>
+      <li><strong>Total Cost:</strong> {total_cost}</li>
+    </ul>
+    <p>We look forward to hosting you.</p>
+    <p>Best regards,<br/>
+       Kilimanjaro Magic Site Hotel</p>
+  </body>
+</html>
+"""
+
+            # Send confirmation email to the guest using HTML email
+            send_gmail_oauth2(guest_email, subject, plain_text_body, html_body)
             return redirect('booking_success')
 
         except Exception as e:
@@ -59,15 +137,23 @@ def book_room(request, room_id):
 
     return render(request, 'booking/book_room.html', {'room': room})
 
-
 def booking_success(request):
     return render(request, 'booking/booking_success.html')
 
+# This view is provided if you need to test email sending separately.
 def send_booking_confirmation(request):
     to_email = "ikramally499@gmail.com"
-    subject = "Booking Confirmation"
-    body = "Your booking has been confirmed."
-    send_gmail_oauth2(to_email, subject, body)
+    subject = "Booking Confirmation - Kilimanjaro Magic Site Hotel"
+    plain_text_body = "Your booking has been confirmed."
+    html_body = """
+    <html>
+      <body>
+        <h2>Booking Confirmation</h2>
+        <p>Your booking has been confirmed.</p>
+      </body>
+    </html>
+    """
+    send_gmail_oauth2(to_email, subject, plain_text_body, html_body)
     return HttpResponse("Email sent!")
 
 def register(request):

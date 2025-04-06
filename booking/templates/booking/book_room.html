@@ -20,12 +20,11 @@
 
     /* PARALLAX BACKGROUND CONTAINER */
     .parallax {
-      /* The image used */
       background: url("{% static 'images/background_image.jpg' %}") no-repeat center center fixed;
       background-size: cover;
       min-height: 100vh;
       display: flex;
-      align-items: center; /* Vertically center .booking-container */
+      align-items: center;
       justify-content: center;
     }
 
@@ -33,7 +32,7 @@
     .booking-container {
       position: relative;
       max-width: 900px;
-      width: 90%; /* Make it responsive on smaller screens */
+      width: 90%;
       margin: 40px auto;
       padding: 30px;
       background-color: rgba(255, 255, 255, 0.9);
@@ -156,7 +155,7 @@
       margin-right: 5px;
     }
 
-    /* CURRENCY SELECTOR (top-right corner inside .booking-container) */
+    /* CURRENCY SELECTOR */
     .currency-selector {
       position: absolute;
       top: 20px;
@@ -169,7 +168,7 @@
       font-weight: 500;
     }
 
-    /* SMALL HELPER FOR RESPONSIVE FIELDS IF DESIRED */
+    /* RESPONSIVE */
     @media (max-width: 768px) {
       .room-card {
         flex-direction: column;
@@ -183,14 +182,13 @@
   </style>
 </head>
 <body>
-<div class="parallax"><!-- Parallax wrapper -->
+<div class="parallax">
   <div class="booking-container">
 
     <!-- Currency Selector -->
     <div class="currency-selector">
       <label for="currency-select">Currency:</label>
       <select id="currency-select" class="form-select form-select-sm">
-        <!-- Default set to TZS as the base currency -->
         <option value="TZS" selected>TZS</option>
         <option value="USD">USD</option>
         <option value="AED">AED</option>
@@ -217,7 +215,7 @@
       </div>
     </div>
 
-    <!-- Step Indicators (if you want to keep them along with the progress bar) -->
+    <!-- Step Indicators -->
     {% if room %}
       <div class="step-indicators">
         <span class="step-indicator active" id="indicator-1">1</span>
@@ -237,7 +235,8 @@
       </div>
     {% endif %}
 
-    <form id="booking-form" method="POST">
+    <!-- Note the action attribute below. If a room is pre-selected, we use its id; otherwise, adjust as needed -->
+    <form id="booking-form" method="POST" action="{% if room %}{% url 'book_room' room.id %}{% else %}{% url 'book_room' 0 %}{% endif %}">
       {% csrf_token %}
 
       <!-- Step 1: Choose Your Dates -->
@@ -260,7 +259,7 @@
         <h4>Step 2: Select Room</h4>
         <p>Please select the room that best fits your needs:</p>
 
-        <!-- All base prices are now in TZS -->
+        <!-- Room Cards -->
         <div class="room-card border" data-base-price="553550">
           <img src="{% static 'images/room1.jpg' %}" alt="Executive Room + 1 crib" />
           <div class="room-info">
@@ -330,7 +329,6 @@
       <div class="step" id="{% if room %}step-2{% else %}step-3{% endif %}">
         <h4>Step {% if room %}2{% else %}3{% endif %}: Add Services</h4>
         <div class="form-check mb-2">
-          <!-- Prices here are now in TZS (e.g. Breakfast: 50 USD ≈ 117000 TZS) -->
           <input class="form-check-input" type="checkbox" value="117000" data-service-base-price="117000" id="breakfast">
           <label class="form-check-label" for="breakfast" data-service-label data-service-name="Breakfast">Breakfast</label>
         </div>
@@ -420,8 +418,8 @@
         <button type="submit" class="btn btn-success">Confirm Booking</button>
       </div>
     </form>
-  </div> <!-- .booking-container -->
-</div> <!-- .parallax -->
+  </div>
+</div>
 
 <!-- Bootstrap JS Bundle (includes Popper) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -433,8 +431,6 @@
   let currentStep = 1;
   let selectedRoomDetails = { name: '', basePriceTZS: 0 };
 
-  // Conversion rates: base price is in TZS.
-  // Example: if 1 USD = 2340 TZS, then price_in_USD = price_in_TZS / 2340.
   const conversionRates = {
     TZS: 1,
     USD: 2340,
@@ -460,15 +456,12 @@
   {% endif %}
 
   /****************************************
-   * Show Step + Update Step Indicators + Update Progress Bar
+   * Show Step + Update Indicators & Progress Bar
    ****************************************/
   function showStep(step) {
-    // Hide all steps
     document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-    // Show the current step
     document.getElementById('step-' + step).classList.add('active');
 
-    // Update circle indicators
     let indicators = document.querySelectorAll('.step-indicator');
     indicators.forEach((el, index) => {
       let indicatorStep = index + 1;
@@ -478,8 +471,6 @@
         el.classList.remove('active');
       }
     });
-
-    // Update progress bar
     updateProgressBar();
   }
 
@@ -526,20 +517,17 @@
     const checkoutDate = new Date(checkout);
     const today = new Date();
 
-    // Ensure check-in date is today or later
     if (checkinDate < today.setHours(0,0,0,0)) {
       alert("Check-in date cannot be in the past.");
       checkinInput.value = "";
       return;
     }
 
-    // Ensure check-out is after check-in
     if (checkoutDate <= checkinDate) {
       alert("Check-out date must be at least one day after the check-in date.");
       checkoutInput.value = "";
       return;
     }
-
     nextStep();
   }
 
@@ -554,7 +542,6 @@
     selectedRoomDetails.name = roomName;
     selectedRoomDetails.basePriceTZS = basePriceTZS;
 
-    // Highlight selected card
     document.querySelectorAll('.room-card').forEach(card => card.classList.remove('border-primary'));
     roomCard.classList.add('border-primary');
   }
@@ -665,7 +652,6 @@
    * Currency Conversion Display Update
    ****************************************/
   function updateCurrencyDisplay() {
-    // Update room prices
     const roomCards = document.querySelectorAll('.room-card');
     roomCards.forEach(card => {
       const basePriceTZS = parseFloat(card.getAttribute('data-base-price')) || 0;
@@ -676,7 +662,6 @@
       }
     });
 
-    // Update service prices
     const serviceLabels = document.querySelectorAll('[data-service-label]');
     serviceLabels.forEach(label => {
       const input = label.previousElementSibling;
@@ -685,7 +670,6 @@
       label.textContent = label.getAttribute('data-service-name') + ` (${convertedServicePrice.toFixed(2)} ${selectedCurrency})`;
     });
 
-    // If we're on the final step, refresh summary
     if (currentStep === maxSteps) {
       generateSummary();
     }
@@ -695,11 +679,9 @@
    * Final Submission
    ****************************************/
   document.getElementById('booking-form').addEventListener('submit', function(e) {
-    // Let form submit normally, but show an alert first
     alert('Booking Confirmed! Thank you, ' + document.getElementById('guest-name').value);
   });
 
-  // Initialize the first step & currency display
   showStep(currentStep);
   updateCurrencyDisplay();
 </script>

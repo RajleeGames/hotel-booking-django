@@ -13,8 +13,10 @@ SECRET_KEY = 'django-insecure-k%(%^+4xbu$=4pr9_x1$(zcmnkwz=_+al77_p(ns8*_o)io7(z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [  'b864-41-78-169-246.ngrok-free.app','127.0.0.1',]
-
+ALLOWED_HOSTS = [
+    'b864-41-78-169-246.ngrok-free.app',
+    '127.0.0.1',
+]
 
 # Application definition
 
@@ -58,7 +60,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'kilimanjaro_magic_site.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -68,7 +69,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -88,7 +88,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -100,41 +99,31 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-# settings.py
-
-# Add the path where static files are stored
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Assuming your static folder is in the project root
+    BASE_DIR / "static",
 ]
 
-# For production, you may need to add this too (for collecting static files during deployment)
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# URL for static files
 STATIC_URL = '/static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
-# Email settings for Gmail OAuth2
+# Email settings for Gmail OAuth2 (if using Django's email functions)
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "mirajially999@gmail.com"
-EMAIL_HOST_PASSWORD = None  # OAuth2 will handle authentication
+EMAIL_HOST_USER = "hajraally499@gmail.com"  # This is the default sender for Django emails.
+EMAIL_HOST_PASSWORD = None  # OAuth2 will handle authentication if used
 
-# Custom settings for OAuth2 email sending (used in your custom email function)
+# Custom settings for OAuth2 email sending (if you need them)
 EMAIL_USE_OAUTH2 = True
 EMAIL_OAUTH2_TOKEN_PATH = "token.pickle"
 
